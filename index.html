@@ -298,17 +298,29 @@ function streak(){
 /* ===== links ===== */
 const URL_RE = /^(?:https?|mailto|file|outlook|ms-outlook|onenote|msteams):/i;
 const isUrl = v => URL_RE.test(v.trim());
+const isPath = v => /^(?:[a-zA-Z]:[\\\/]|\\\\)/.test(v.trim());
+const cleanLink = v => v.trim().replace(/^["“”]+|["“”]+$/g, '').trim();
 function linkInfo(v){
   v = v.trim();
+  if (isPath(v)) { const seg = v.replace(/[\\\/]+$/, '').split(/[\\\/]/).filter(Boolean).pop() || v; return {icon:'📁', label: seg.length > 24 ? seg.slice(0,24)+'…' : seg, url:true}; }
   if (/^mailto:/i.test(v)) return {icon:'✉️', label:decodeURIComponent(v.slice(7).split('?')[0]) || 'メール', url:true};
   if (/^https?:/i.test(v)) { try { const u = new URL(v); return {icon:'🔗', label:u.hostname.replace(/^www\./,'') + (u.pathname.length > 1 ? u.pathname.slice(0,18) : ''), url:true}; } catch(e){} }
   if (isUrl(v)) return {icon:/^(ms-)?outlook:/i.test(v) ? '✉️' : '🔗', label:v.replace(/^[a-z-]+:\/*/i,'').slice(0,24) || 'リンク', url:true};
   return {icon:'✉️', label:v.length > 26 ? v.slice(0,26)+'…' : v, url:false};
 }
+function copyText(v){
+  if (navigator.clipboard && window.isSecureContext) return navigator.clipboard.writeText(v);
+  return new Promise((ok, ng) => { const x = document.createElement('textarea'); x.value = v; x.style.position = 'fixed'; x.style.opacity = '0'; document.body.appendChild(x); x.select(); let r = false; try { r = document.execCommand('copy'); } catch(e){} x.remove(); r ? ok() : ng(); });
+}
 function openLink(v){
-  v = v.trim();
-  if (isUrl(v)) { const a = document.createElement('a'); a.href = v; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); }
-  else { (navigator.clipboard ? navigator.clipboard.writeText(v) : Promise.reject()).then(() => toast('コピーしました（貼り付けて使えます）'), () => toast('コピーできませんでした')); }
+  v = cleanLink(v);
+  if (isPath(v)) {
+    copyText(v).catch(() => {});
+    const a = document.createElement('a'); a.href = 'taskflow-open:' + encodeURIComponent(v); document.body.appendChild(a); a.click(); a.remove();
+    toast('フォルダ／ファイルを開いています…（開かないときはパスをコピー済みなので、エクスプローラーに貼り付けてください）');
+  }
+  else if (isUrl(v)) { const a = document.createElement('a'); a.href = v; a.target = '_blank'; a.rel = 'noopener'; document.body.appendChild(a); a.click(); a.remove(); }
+  else { copyText(v).then(() => toast('コピーしました（貼り付けて使えます）'), () => toast('コピーできませんでした')); }
 }
 
 const REP = {daily:'毎日', weekday:'平日', weekly:'毎週', monthly:'毎月'};
@@ -547,6 +559,7 @@ const LKC = ['#5b6cff','#8a5cff','#e0559c','#f0506e','#ff9f43','#2fbf8f','#00a6b
 const lkColor = str => { let h = 0; for (const c of str) h = (h*31 + c.charCodeAt(0)) >>> 0; return LKC[h % LKC.length]; };
 function lkSub(u){
   try { if (/^https?:/i.test(u)) { const x = new URL(u); return x.hostname.replace(/^www\./,'') + (x.pathname.length > 1 ? x.pathname.slice(0,24) : ''); } } catch(e){}
+  if (isPath(u)) return u.length > 36 ? '…' + u.slice(-35) : u;
   return isUrl(u) ? u.replace(/^[a-z-]+:\/*/i,'').slice(0,34) : (u.length > 34 ? u.slice(0,34)+'…' : u) + '（クリックでコピー）';
 }
 function vLinks(){
@@ -564,12 +577,12 @@ function openLinkModal(id){
   const groups = [...new Set((S.links||[]).map(x => x.group).filter(Boolean))], L = $('#layer');
   L.innerHTML = `<div class="scrim" id="scrim"><div class="modal" style="width:min(460px,94vw)">
     <div class="f"><label>名前</label><input type="text" class="big" id="lTitle" placeholder="例）勤怠システム" value="${esc(l.title)}"></div>
-    <div class="f"><label>URL（またはフォルダのパス）</label><input type="text" id="lUrl" placeholder="https://... / \\\\server\\share\\..." value="${esc(l.url)}"><div class="hint" style="font-size:11px;color:var(--muted);margin-top:5px">URLは開き、フォルダのパスなどはクリックでコピーされます</div></div>
+    <div class="f"><label>URL（またはフォルダのパス）</label><input type="text" id="lUrl" placeholder="https://... / \\\\server\\share\\..." value="${esc(l.url)}"><div class="hint" style="font-size:11px;color:var(--muted);margin-top:5px">URLはブラウザで開き、フォルダ／ファイルのパス（C:\\… や \\\\server\\…）はエクスプローラーで開きます</div></div>
     <div class="f"><label>グループ（任意）</label><input type="text" id="lGroup" list="lgl" placeholder="例）社内システム、資料、よく使う" value="${esc(l.group)}"><datalist id="lgl">${groups.map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
     <div class="mf">${cur ? '<button class="btn danger sm" id="lDel">削除</button>' : ''}<span class="sp"></span><button class="btn ghost" id="lCancel">キャンセル</button><button class="btn" id="lSave">保存</button></div></div></div>`;
   const close = () => L.innerHTML = '';
   const save_ = () => {
-    let url = $('#lUrl').value.trim(), title = $('#lTitle').value.trim();
+    let url = cleanLink($('#lUrl').value), title = $('#lTitle').value.trim();
     if (!url) return $('#lUrl').focus();
     if (!isUrl(url) && /^[\w-]+(\.[\w-]+)+(\/|$)/.test(url)) url = 'https://' + url;
     if (!title) title = lkSub(url).replace('（クリックでコピー）','');
@@ -599,8 +612,8 @@ function openModal(id, preset){
     <div class="f"><label>🏷 タグ</label><input type="text" id="mTag" list="tl" placeholder="例）営業、開発" value="${esc(t.tag)}"><datalist id="tl">${tags.map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
     <div class="f"><label>🔁 くり返し</label><div class="seg">${[['','なし'],['daily','毎日'],['weekday','平日'],['weekly','毎週'],['monthly','毎月']].map(([k,l]) => `<button data-rp="${k}" class="${(t.repeat||'')===k?'on':''}">${l}</button>`).join('')}</div>
       ${t.repeat ? `<div class="hint" style="font-size:11px;color:var(--muted);margin-top:5px">完了すると、次の${REP[t.repeat]}の分が自動で作られます${t.due ? '' : '（期日を入れてください）'}</div>` : ''}</div>
-    <div class="f"><label>🔗 参照リンク・メール</label><div>${t.links.map((v,i) => `<div class="sr2"><input type="text" data-lt="${i}" value="${esc(v)}" placeholder="URL、メールの件名、メールのリンクなど"><button class="x" data-lo="${i}" title="開く / コピー">↗</button><button class="x" data-lx="${i}">✕</button></div>`).join('')}</div>
-      <button class="btn ghost sm" id="mLkAdd">＋ リンクを追加</button><div class="hint" style="font-size:11px;color:var(--muted);margin-top:5px">URLは開き、メールの件名などの文字はクリックでコピーされます</div></div>
+    <div class="f"><label>🔗 参照リンク・メール</label><div>${t.links.map((v,i) => `<div class="sr2"><input type="text" data-lt="${i}" value="${esc(v)}" placeholder="URL、フォルダのパス、メールの件名など"><button class="x" data-lo="${i}" title="開く / コピー">↗</button><button class="x" data-lx="${i}">✕</button></div>`).join('')}</div>
+      <button class="btn ghost sm" id="mLkAdd">＋ リンクを追加</button><div class="hint" style="font-size:11px;color:var(--muted);margin-top:5px">URLとフォルダ／ファイルのパスは開き、メールの件名などの文字はクリックでコピーされます</div></div>
     <details class="more-d" ${t.subs.length||t.note?'open':''}><summary>もっと設定（サブタスク・メモ）</summary>
     <div class="f"><label>小さく分ける（サブタスク）</label><div>${t.subs.map((s,i) => `<div class="sr2"><input type="checkbox" data-sc="${i}" ${s.d?'checked':''}><input type="text" data-st="${i}" value="${esc(s.t)}" placeholder="最初の一歩は？"><button class="x" data-sx="${i}">✕</button></div>`).join('')}</div>
       <button class="btn ghost sm" id="mSubAdd">＋ 追加</button></div>
@@ -608,7 +621,7 @@ function openModal(id, preset){
     <div class="mf">${isNew ? '' : '<button class="btn danger sm" id="mDel">削除</button>'}<span class="sp">Ctrl+Enter 保存 ／ Esc 閉じる</span><button class="btn ghost" id="mCancel">キャンセル</button><button class="btn" id="mSave">保存</button></div></div></div>`; };
   const sync = () => { t.title = $('#mTitle').value; t.due = $('#mDue').value; t.tag = $('#mTag').value.trim().replace(/^#/,''); t.note = $('#mNote').value; L.querySelectorAll('[data-st]').forEach(i => t.subs[+i.dataset.st].t = i.value); L.querySelectorAll('[data-lt]').forEach(i => t.links[+i.dataset.lt] = i.value); };
   const close = () => L.innerHTML = '';
-  const commit = () => { sync(); t.title = t.title.trim(); if (!t.title) return $('#mTitle').focus(); t.subs = t.subs.filter(s => s.t.trim()); t.links = t.links.map(v => v.trim()).filter(Boolean); if (isNew) S.tasks.unshift(t); else Object.assign(byId(t.id), t); save(); close(); render(); };
+  const commit = () => { sync(); t.title = t.title.trim(); if (!t.title) return $('#mTitle').focus(); t.subs = t.subs.filter(s => s.t.trim()); t.links = t.links.map(cleanLink).filter(Boolean); if (isNew) S.tasks.unshift(t); else Object.assign(byId(t.id), t); save(); close(); render(); };
   draw();
   L.onclick = e => {
     if (e.target.id === 'scrim') return close();
