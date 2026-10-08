@@ -178,15 +178,15 @@ svg{display:block}
 /* calendar */
 .ch{display:flex;align-items:center;gap:10px;margin-bottom:12px}
 .ch h3{margin:0;font-size:19px;min-width:120px}
-.cal{display:grid;grid-template-columns:repeat(7,1fr);background:var(--panel);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));background:var(--panel);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
 .dow{padding:9px;text-align:center;font-size:12px;font-weight:700;color:var(--muted);background:var(--panel2)}
 .dow:first-child,.sun .dn{color:var(--high)} .dow:nth-child(7),.sat .dn{color:var(--accent)}
-.day{min-height:104px;border-right:1px solid var(--line);border-top:1px solid var(--line);padding:5px;display:flex;flex-direction:column;gap:3px;cursor:pointer;transition:.1s}
+.day{min-width:0;overflow:hidden;min-height:104px;border-right:1px solid var(--line);border-top:1px solid var(--line);padding:5px;display:flex;flex-direction:column;gap:3px;cursor:pointer;transition:.1s}
 .day:nth-child(7n+1){}.day:nth-child(7n){border-right:0}
 .day.out{opacity:.45} .day:hover,.day.over{background:var(--accent-soft)}
-.dn{font-size:12px;font-weight:700;width:24px;height:24px;display:grid;place-items:center;border-radius:50%}
+.dn{flex:none;font-size:12px;font-weight:700;width:24px;height:24px;display:grid;place-items:center;border-radius:50%}
 .day.today .dn{background:var(--accent);color:#fff}
-.ev{font-size:12px;font-weight:600;padding:2px 7px;border-radius:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:grab;background:var(--ec-s);color:var(--ec)}
+.ev{max-width:100%;flex:none;font-size:12px;font-weight:600;padding:2px 7px;border-radius:6px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:grab;background:var(--ec-s);color:var(--ec)}
 .ev.p3{--ec:var(--high);--ec-s:var(--high-soft)} .ev.p2{--ec:var(--mid);--ec-s:var(--mid-soft)} .ev.p1{--ec:var(--low);--ec-s:var(--low-soft)}
 .ev.done{opacity:.45;text-decoration:line-through}
 .more{font-size:11px;color:var(--muted);padding-left:4px}
