@@ -133,11 +133,61 @@ svg{display:block}
 .lt span{display:block;font-size:11.5px;color:var(--muted);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lked{opacity:0;width:26px;height:26px;border-radius:8px;color:var(--muted);transition:.15s}
 .lcard:hover .lked{opacity:1}.lked:hover{background:var(--panel2);color:var(--accent)}
+.nav-h{margin:14px 12px 3px;font-size:10.5px;font-weight:800;letter-spacing:1.4px;color:var(--muted);opacity:.75}
+.pill.pj{background:var(--pcs,var(--panel2));color:var(--pc,var(--muted));cursor:pointer}
+.pill.mt{background:var(--mid-soft);color:var(--mid)}
+.dt{font-size:11.5px;color:var(--muted)} .dt.ok{color:var(--low);font-weight:600}
+.sh.pjh{color:var(--accent)}
+.row.ms:before{border-radius:3px}
+.pdot{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block}.pdot.big{width:16px;height:16px}
+.muted{color:var(--muted)}
+.pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:12px}
+.pcard{background:var(--panel);border-radius:16px;padding:14px 16px;cursor:pointer;box-shadow:var(--shadow);border-top:4px solid var(--pc);transition:.15s}
+.pcard:hover{transform:translateY(-2px)}
+.pc-h{display:flex;align-items:center;gap:8px}.pc-h b{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pc-n{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.pc-bar{height:6px;background:var(--line);border-radius:9px;margin:10px 0 9px;overflow:hidden}.pc-bar i{display:block;height:100%;background:var(--pc);border-radius:9px}
+.pc-next{font-size:12.5px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.pc-next .od{color:var(--high)}
+.pj-actions{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 18px 4px}
+.pring{position:relative;margin-left:auto;width:64px;height:64px;flex:none}.pring b{position:absolute;inset:0;display:grid;place-items:center;font-size:14px;font-weight:800}
+.arch{margin-left:10px;font-size:11px;background:var(--low-soft);color:var(--low);padding:1px 9px;border-radius:99px;vertical-align:middle}
+.colors{display:flex;gap:8px}.cdot{width:26px;height:26px;border-radius:50%;border:3px solid transparent;transition:.15s}.cdot.on{border-color:var(--text)}
+.tl{background:var(--panel);border-radius:18px;box-shadow:var(--shadow);padding:14px 16px 10px;margin-bottom:22px;overflow:hidden}
+.tl-row{display:grid;grid-template-columns:132px minmax(0,1fr);align-items:center}
+.tl-name{display:flex;gap:8px;align-items:center;font-weight:700;font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;cursor:pointer;padding-right:8px}
+.tl-track{position:relative;height:40px;border-left:1px solid var(--line)}
+.tl-track:before{content:"";position:absolute;left:0;right:0;top:50%;height:2px;margin-top:-1px;background:var(--panel2)}
+.tl-axis .tl-track{height:22px;border:0}.tl-axis .tl-track:before{display:none}
+.tl-axis span{position:absolute;top:2px;font-size:11px;color:var(--muted);font-weight:700;transform:translateX(3px)}
+.tl-mline{position:absolute;top:0;bottom:0;width:1px;background:var(--line)}
+.tl-today{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--high);opacity:.75;z-index:1}
+.mk{position:absolute;top:50%;width:15px;height:15px;margin:-7px 0 0 -7px;background:var(--pc);cursor:pointer;z-index:2;transition:.15s}
+.mk.dia{transform:rotate(45deg) scale(.82);border-radius:3px}.mk.dia:hover{transform:rotate(45deg) scale(1.1)}
+.mk.cir{border-radius:50%;background:var(--panel);border:3px solid var(--pc)}.mk.cir:hover{transform:scale(1.2)}
+.mk.dn{opacity:.3}.mk.od{background:var(--high);box-shadow:0 0 0 3px var(--high-soft)}.mk.cir.od{border-color:var(--high);background:var(--panel)}
+.tl-legend{display:flex;gap:16px;justify-content:flex-end;font-size:11px;color:var(--muted);padding:6px 4px 0}.tl-legend .red{color:var(--high)}
+.ev.ms{font-weight:700;cursor:pointer}
+.kp{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 14px 4px}
+.wk-panel{background:var(--panel);border-radius:18px;box-shadow:var(--shadow);padding:16px;margin-bottom:22px}
+.wtext{width:100%;min-height:360px;border:0;outline:0;background:var(--panel2);border-radius:12px;padding:14px 16px;line-height:1.8;resize:vertical;font-size:13.5px}
+.mcap{background:var(--panel);border-radius:16px;box-shadow:var(--shadow);padding:10px 12px;display:flex;gap:10px;align-items:flex-end;margin-bottom:14px}
+.mcap textarea{flex:1;border:0;outline:0;background:none;resize:vertical;min-height:48px;font-size:14.5px;line-height:1.6}
+.mtags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}.mtags .pill{padding:2px 12px}
+.mgrid{columns:3 230px;column-gap:12px}
+.mcard{break-inside:avoid;position:relative;background:var(--panel);border-radius:14px;padding:13px 15px;margin-bottom:12px;box-shadow:0 1px 2px rgba(30,40,90,.05);cursor:pointer;transition:.15s}
+.mcard:hover{box-shadow:var(--shadow)}.mcard.pin{box-shadow:inset 0 0 0 1.5px #f5b301,0 1px 2px rgba(30,40,90,.05)}
+.mcard b{display:block;margin-bottom:3px;word-break:break-word;padding-right:62px}
+.mcard p{margin:0;color:var(--muted);font-size:13px;white-space:pre-wrap;word-break:break-word;display:-webkit-box;-webkit-line-clamp:6;-webkit-box-orient:vertical;overflow:hidden}
+.mf2{display:flex;gap:6px;align-items:center;margin-top:9px;font-size:11px;color:var(--muted);flex-wrap:wrap}
+.macts{position:absolute;top:8px;right:8px;display:flex;gap:1px;opacity:0;transition:.15s}.mcard:hover .macts{opacity:1}
+.macts button{width:22px;height:22px;border-radius:6px;font-size:12px;color:var(--muted)}.macts button:hover{background:var(--panel2);color:var(--accent)}
+.dates{font-size:12px;color:var(--muted);margin-top:4px}.dates b{color:var(--text)}.dates input{padding:3px 8px;border-radius:8px;border:0;background:var(--panel2);font-size:12px;margin-left:4px}
+.ck{display:flex!important;align-items:center;gap:8px;font-size:13px!important;color:var(--text)!important}.ck input{width:17px;height:17px;accent-color:var(--accent)}
 /* sections & rows */
 .sec{margin-bottom:22px}
 .sh{display:flex;align-items:center;gap:8px;margin:0 2px 9px;font-weight:700;font-size:13px;color:var(--muted)}
 .sh .c{background:var(--panel);border-radius:99px;padding:0 8px;font-size:11px;box-shadow:var(--shadow)}
 .sh.red{color:var(--high)} .sh .sp{flex:1} .sh button{font-size:12px;color:var(--muted);text-decoration:underline}
+.sh .btn{color:#fff;font-size:13px;text-decoration:none;margin-left:6px}.sh .btn.ghost{color:var(--text)}
 .row{position:relative;display:flex;align-items:center;gap:13px;background:var(--panel);border-radius:14px;padding:11px 14px 11px 18px;margin-bottom:7px;cursor:pointer;box-shadow:0 1px 2px rgba(30,40,90,.04);transition:.15s}
 .row:before{content:"";position:absolute;left:6px;top:12px;bottom:12px;width:4px;border-radius:9px;background:var(--pc,var(--line))}
 .row.p3{--pc:var(--high)} .row.p2{--pc:var(--mid)} .row.p1{--pc:var(--low)}
@@ -266,9 +316,9 @@ const nextMonday = () => { const d = parseD(today()); d.setDate(d.getDate() + (8
 
 /* ===== state ===== */
 const KEY = 'taskflow.v2';
-let S = { tasks: [], nav: 'today', theme: 'light', calMonth: today().slice(0,7), hist: {}, cap: 360, showDone: false, links: [], f: {st:'open', imp:0, pri:0, due:'all', tag:'', sort:'due', dir:1} };
+let S = { tasks: [], nav: 'today', theme: 'light', calMonth: today().slice(0,7), hist: {}, cap: 360, showDone: false, links: [], projects: [], ms: [], memos: [], proj: '', pjShowDone: false, weekOff: 0, memoTag: '', f: {st:'open', imp:0, pri:0, proj:'', due:'all', tag:'', sort:'due', dir:1} };
 let q = '';
-const mk = o => Object.assign({id:uid(), title:'', note:'', due:'', plan:'', priority:2, important:false, tag:'', repeat:'', subs:[], links:[], done:false, doneAt:0, created:Date.now()}, o);
+const mk = o => Object.assign({id:uid(), title:'', note:'', due:'', plan:'', priority:2, important:false, project:'', tag:'', repeat:'', subs:[], links:[], done:false, doneAt:0, created:Date.now()}, o);
 const byId = id => S.tasks.find(t => t.id === id);
 function load(){
   let raw = null;
@@ -277,8 +327,13 @@ function load(){
     try { const o = JSON.parse(localStorage.getItem('taskflow.v1')); if (o && o.tasks) raw = { tasks: o.tasks.map(t => mk({...t, done: t.status==='done', tag: t.cat||''})) , theme: o.theme==='dark'?'dark':'light' }; } catch(e){}
   }
   if (raw) Object.assign(S, raw);
-  S.f = Object.assign({st:'open', imp:0, pri:0, due:'all', tag:'', sort:'due', dir:1}, S.f);
-  S.nav = 'today';
+  S.f = Object.assign({st:'open', imp:0, pri:0, proj:'', due:'all', tag:'', sort:'due', dir:1}, S.f);
+  normalize();
+  S.nav = 'today'; S.proj = '';
+}
+function normalize(){
+  for (const k of ['tasks','links','projects','ms','memos']) if (!Array.isArray(S[k])) S[k] = [];
+  S.tasks.forEach(t => { if (t.project == null) t.project = ''; if (!t.created) t.created = Date.now(); if (!Array.isArray(t.subs)) t.subs = []; if (!Array.isArray(t.links)) t.links = []; });
 }
 function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
 
@@ -294,6 +349,19 @@ function streak(){
   while (S.hist[d] > 0) { n++; d = addDays(d,-1); }
   return n;
 }
+
+
+/* ===== projects / dates helpers ===== */
+const PCOL = ['#5b6cff','#8a5cff','#e0559c','#f0506e','#ff9f43','#2fbf8f','#00a6b8','#4f8cff'];
+const projById = id => S.projects.find(p => p.id === id);
+const projOk = m => { const p = projById(m.project); return !!p && !p.archived; };
+const msCmp = (a,b) => a.date.localeCompare(b.date) || (a.time||'').localeCompare(b.time||'');
+const dayOf = ms => ymd(new Date(ms));
+const mdT = ms => { const d = new Date(ms); return `${d.getMonth()+1}/${d.getDate()}`; };
+const fmtMD = s => { const d = parseD(s); return `${d.getMonth()+1}/${d.getDate()}(${WD[d.getDay()]})`; };
+function weekRange(off){ const T = today(), d = parseD(T), dow = (d.getDay() + 6) % 7, mon = addDays(T, -dow + off*7); return {mon, sun: addDays(mon, 6)}; }
+const firstLine = txt => (txt || '').split(/\r?\n/)[0].trim();
+const memoTags = txt => [...new Set((txt || '').match(/#[^\s#]+/g) || [])].map(x => x.slice(1));
 
 /* ===== links ===== */
 const URL_RE = /^(?:https?|mailto|file|outlook|ms-outlook|onenote|msteams):/i;
@@ -330,10 +398,11 @@ function nextWeekday(){ const d = parseD(today()); while ([0,6].includes(d.getDa
 
 /* ===== quick-add parsing ===== */
 function parseQuick(text){
-  let title = text, due = '', priority = 0, tag = '', important = false, repeat = ''; const links = [];
+  let title = text, due = '', priority = 0, tag = '', important = false, repeat = '', project = ''; const links = [];
   const T = today();
   const take = (re, fn) => { const m = title.match(re); if (m) { fn(m); title = title.replace(m[0], ' '); } };
   for (let g = 0; g < 5; g++) take(/(?:https?|mailto|file|ms-outlook|outlook|onenote|msteams):\S+/i, m => links.push(m[0]));
+  { const m = title.match(/(?:^|\s)@(\S+)/); if (m) { const k = m[1].toLowerCase(); const pj = S.projects.find(x => x.name.toLowerCase() === k) || S.projects.find(x => x.name.toLowerCase().includes(k)); if (pj) { project = pj.id; title = title.replace(m[0], ' '); } } }
   take(/(?:^|\s)(?:[!！]重要|★)/, () => important = true);
   take(/(?:^|\s)#(\S+)/, m => tag = m[1]);
   take(/(?:^|\s)[!！](高|中|低|[1-3])/, m => priority = {高:3,中:2,低:1}[m[1]] || +m[1]);
@@ -348,7 +417,7 @@ function parseQuick(text){
   take(/([日月火水木金土])曜(?:日)?/, m => { const d = parseD(T); let k = (WD.indexOf(m[1]) - d.getDay() + 7) % 7 || 7; d.setDate(d.getDate()+k); due = ymd(d); });
   take(/(\d{1,2})[\/月](\d{1,2})日?/, m => { const now = parseD(T); const d = new Date(now.getFullYear(), +m[1]-1, +m[2]); if (d < now) d.setFullYear(d.getFullYear()+1); due = ymd(d); });
   take(/(\d{1,3})日後/, m => due = addDays(T, +m[1]));
-  return { title: title.replace(/\s+/g,' ').trim(), due, priority: priority || 2, hasPri: !!priority, tag, important, links, repeat };
+  return { title: title.replace(/\s+/g,' ').trim(), due, priority: priority || 2, hasPri: !!priority, tag, important, links, repeat, project };
 }
 function dueInfo(due){
   const n = diff(due), d = parseD(due), full = `${d.getMonth()+1}/${d.getDate()}(${WD[d.getDay()]})`;
@@ -428,6 +497,9 @@ const P = {
   link:'<path d="M10 14a4 4 0 005.7 0l3-3a4 4 0 00-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 00-5.7 0l-3 3a4 4 0 005.7 5.7l1-1"/>',
   inbox:'<path d="M3 13l3-8h12l3 8v6H3z"/><path d="M3 13h5l1 3h6l1-3h5"/>',
   trophy:'<path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 01-10 0zM17 5h3v2a3 3 0 01-3 3M7 5H4v2a3 3 0 003 3"/>',
+  memo:'<path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4M9 12h6M9 16h6"/>',
+  proj:'<rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V4h6v3M3 13h18"/>',
+  week:'<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/>',
   tick:'<path d="M5 12.5l4.5 4.5L19 7.5" stroke-width="3"/>',
 };
 const ic = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${P[n]}</svg>`;
@@ -438,27 +510,39 @@ function renderSide(){
   const n = (k, i, l, c, red) => `<button class="nav ${S.nav===k&&!q?'on':''}" data-nav="${k}">${ic(i)}<span>${l}</span>${c!==''?`<span class="n ${red&&c?'red':''}">${c}</span>`:''}</button>`;
   const over = o.filter(t => t.due && t.due < T).length;
   $('#side').innerHTML = `<div class="brand"><div class="logo"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-linecap="round" stroke-linejoin="round">${P.tick}</svg></div><span>TaskFlow</span></div>
-    ${n('today','sun','今日',todayList().length, over)}${n('soon','clock','近日','')}${n('all','list','すべて',o.length)}${n('cal','cal','カレンダー','')}${n('inbox','inbox','あとで',o.filter(t=>!t.due&&t.plan!==T).length)}${n('links','link','リンク',(S.links||[]).length)}
+    <div class="nav-h">個人タスク</div>
+    ${n('today','sun','今日',todayList().length, over)}${n('soon','clock','近日','')}${n('all','list','すべて',o.length)}${n('cal','cal','カレンダー','')}${n('inbox','inbox','あとで',o.filter(t=>!t.due&&t.plan!==T).length)}${n('week','week','週報','')}
+    <div class="nav-h">プロジェクト</div>
+    ${n('projects','proj','プロジェクト',S.projects.filter(x=>!x.archived).length)}
+    <div class="nav-h">ノート</div>
+    ${n('memo','memo','メモ',(S.memos||[]).length)}${n('links','link','リンク',(S.links||[]).length)}
     <div class="side-foot"><button class="ib" id="bTheme" title="ライト/ダーク">${S.theme==='dark'?'☀️':'🌙'}</button><button class="ib" id="bExp" title="バックアップを書き出す">⬇</button><button class="ib" id="bImp" title="バックアップを読み込む">⬆</button><button class="ib" id="bReset" title="すべて削除（初期化）">🗑</button></div>`;
 }
 function ring(p, size, w, col, bg){
   const r = (size - w)/2, L = 2*Math.PI*r;
   return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${bg}" stroke-width="${w}"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="${L*p} ${L}" transform="rotate(-90 ${size/2} ${size/2})" style="transition:stroke-dasharray .6s"/></svg>`;
 }
-function meta(t, showDue = true){
-  const di = t.due ? dueInfo(t.due) : null, ds = t.subs.filter(s=>s.d).length;
-  return `${t.tag ? `<span class="pill t" data-tag="${esc(t.tag)}">#${esc(t.tag)}</span>` : ''}${t.subs.length ? `<span class="prog"><i><b style="width:${ds/t.subs.length*100}%"></b></i>${ds}/${t.subs.length}</span>` : ''}${(t.links||[]).slice(0,2).map((v,i) => { const L = linkInfo(v); return `<span class="lk" data-lk="${t.id}:${i}" title="${esc(v)}">${L.icon} ${esc(L.label)}</span>`; }).join('')}${(t.links||[]).length > 2 ? `<span>+${t.links.length-2}</span>` : ''}${t.repeat ? `<span class="pill rp">🔁 ${REP[t.repeat]}</span>` : ''}${t.note ? '<span title="メモあり">📝</span>' : ''}`;
+function meta(t, dates = false){
+  const ds = t.subs.filter(s=>s.d).length, pj = t.project ? projById(t.project) : null;
+  return `${pj ? `<span class="pill pj" style="--pc:${pj.color};--pcs:${pj.color}22" data-proj="${pj.id}">${esc(pj.name)}</span>` : ''}${t.tag ? `<span class="pill t" data-tag="${esc(t.tag)}">#${esc(t.tag)}</span>` : ''}${t.subs.length ? `<span class="prog"><i><b style="width:${ds/t.subs.length*100}%"></b></i>${ds}/${t.subs.length}</span>` : ''}${(t.links||[]).slice(0,2).map((v,i) => { const L = linkInfo(v); return `<span class="lk" data-lk="${t.id}:${i}" title="${esc(v)}">${L.icon} ${esc(L.label)}</span>`; }).join('')}${(t.links||[]).length > 2 ? `<span>+${t.links.length-2}</span>` : ''}${t.repeat ? `<span class="pill rp">🔁 ${REP[t.repeat]}</span>` : ''}${t.note ? '<span title="メモあり">📝</span>' : ''}${dates || t.done ? `<span class="dt" title="発行日">発行 ${mdT(t.created)}</span>` : ''}${t.done && t.doneAt ? `<span class="dt ok" title="完了日">完了 ${mdT(t.doneAt)}</span>` : ''}`;
 }
-function row(t, acts = [], always = false){
+function row(t, acts = [], always = false, dates = false){
   const di = t.due ? dueInfo(t.due) : null;
   const L = {today:'今日', tomorrow:'明日', nextweek:'来週', plan:'☀ 今日やる', unplan:'外す'};
   return `<div class="row p${t.priority} ${t.done?'done':''} ${always?'alw':''}" data-open="${t.id}">
     <button class="chk" data-act="chk" data-id="${t.id}" title="${t.done?'未完了に戻す':'完了'}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${P.tick}</svg></button>
-    <div class="rb"><div class="t">${esc(t.title)}</div><div class="m">${meta(t)}</div></div>
+    <div class="rb"><div class="t">${esc(t.title)}</div><div class="m">${meta(t, dates)}</div></div>
     <div class="acts">${acts.map(a => `<button data-act="${a}" data-id="${t.id}">${L[a]}</button>`).join('')}</div>
     ${t.done ? '' : `<button class="star ${t.important?'on':''}" data-act="star" data-id="${t.id}" title="${t.important?'重要を外す':'重要にする（期限に関わらず今日に表示）'}">★</button>`}
     ${di && !t.done ? `<span class="due ${di.c}" title="${di.full}">${di.t}</span>` : ''}
     ${t.done || t.priority !== 3 ? '' : `<span class="tag p3">高</span>`}</div>`;
+}
+function msRow(m, showProj = true){
+  const p = projById(m.project), di = dueInfo(m.date), isM = m.type !== 'mtg', n = diff(m.date);
+  return `<div class="row ms ${m.done?'done':''}" data-msopen="${m.id}" style="--pc:${p ? p.color : 'var(--line)'}">
+    <button class="chk" data-act="msdone" data-id="${m.id}" title="${m.done?'未完了に戻す':(isM?'達成':'実施済み')}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">${P.tick}</svg></button>
+    <div class="rb"><div class="t">${isM ? '◆' : '●'} ${esc(m.title)}</div><div class="m"><span class="pill ${isM ? 't' : 'mt'}">${isM ? 'マイルストン' : '会議'}</span>${m.time ? `<span>🕒 ${esc(m.time)}</span>` : ''}${showProj && p ? `<span class="pill pj" style="--pc:${p.color};--pcs:${p.color}22" data-proj="${p.id}">${esc(p.name)}</span>` : ''}${m.note ? '<span title="メモあり">📝</span>' : ''}</div></div>
+    ${m.done ? '' : `<span class="due ${di.c}" title="${di.full}">${n > 3 ? di.full + '　あと' + n + '日' : di.t}</span>`}</div>`;
 }
 const sec = (label, arr, cls='', extra='') => arr.length ? `<div class="sec">${label ? `<div class="sh ${cls}">${label}<span class="c">${arr.length}</span><span class="sp"></span>${extra}</div>` : ''}${arr.map(x => x.html ?? x).join('')}</div>` : '';
 
@@ -483,6 +567,8 @@ function vToday(){
     <div class="ov-bot">
       <div class="ov-wk"><div class="lh"><span>直近7日の完了</span>${streakN > 1 ? `<em>連続 ${streakN}日</em>` : ''}</div><div class="hbars">${bars}</div></div>
     </div></div>`;
+  const pjUp = S.ms.filter(m => !m.done && projOk(m) && m.date <= addDays(T,14)).sort(msCmp);
+  h += sec('プロジェクトの予定（14日以内）', pjUp.map(m => ({html: msRow(m)})), 'pjh');
   h += sec('期限切れ', over.map(t => ({html: row(t, ['today','tomorrow','nextweek'], true)})), 'red');
   const impL = rest.filter(t => t.important), norm = rest.filter(t => !t.important);
   h += sec('★ 重要', impL.map(t => ({html: row(t, ['tomorrow'])})), 'imp');
@@ -492,26 +578,29 @@ function vToday(){
   return h;
 }
 function vSoon(){
-  const T = today(), o = open().filter(t => t.due && t.due > T).sort(cmpDue);
-  const cnt = i => o.filter(t => t.due === addDays(T,i)).length;
+  const T = today(), o = open().filter(t => t.due && t.due > T).sort(cmpDue), mm = S.ms.filter(m => !m.done && projOk(m) && m.date > T);
+  const cnt = i => o.filter(t => t.due === addDays(T,i)).length + mm.filter(m => m.date === addDays(T,i)).length;
   let strip = '<div class="strip">', max = Math.max(4, ...Array.from({length:14}, (_,i) => cnt(i+1)));
   for (let i = 1; i <= 14; i++) {
     const s = addDays(T,i), d = parseD(s), m = cnt(i);
     strip += `<div class="sd ${[0,6].includes(d.getDay())?'we':''}" title="${d.getMonth()+1}/${d.getDate()}：${m ? m+'件' : '予定なし'}"><i class="${!m?'none':m>=6?'over':''}" style="height:${m?Math.max(12, m/max*100):4}%"></i><span>${d.getDate()}</span></div>`;
   }
   strip += '</div>';
-  let h = `<div class="sh" style="margin-bottom:6px">今後2週間のタスク数<span class="sp"></span></div>${strip}`;
-  const groups = {}; o.forEach(t => (groups[t.due] ||= []).push(t));
+  let h = `<div class="sh" style="margin-bottom:6px">今後2週間のタスク・予定数<span class="sp"></span></div>${strip}`;
+  const groups = {};
+  o.forEach(t => (groups[t.due] ||= []).push({k:'t', x:t}));
+  mm.forEach(m => (groups[m.date] ||= []).push({k:'m', x:m}));
   const keys = Object.keys(groups).sort();
-  h += keys.map(k => { const i = dueInfo(k); return sec(`${i.full}${diff(k)===1?'　明日':''}`, groups[k].sort(cmp).map(t => ({html: row(t, ['plan'])}))); }).join('');
+  h += keys.map(k => { const i = dueInfo(k); const items = groups[k].sort((a,b) => (a.k === 'm' ? 0 : 1) - (b.k === 'm' ? 0 : 1) || (a.k === 't' ? cmp(a.x,b.x) : msCmp(a.x,b.x)));
+    return sec(`${i.full}${diff(k)===1?'　明日':''}`, items.map(it => ({html: it.k === 'm' ? msRow(it.x) : row(it.x, ['plan'])}))); }).join('');
   return h + (keys.length ? '' : `<div class="empty"><div class="em">🍃</div><b>先の予定はありません</b></div>`);
 }
 function vAll(){
   const F = S.f, T = today(), tags = [...new Set(S.tasks.map(t => t.tag).filter(Boolean))].sort();
   let a = S.tasks.filter(t => (F.st === 'all' || (F.st === 'done') === t.done)
-    && (!F.imp || t.important) && (!F.pri || t.priority === F.pri) && (!F.tag || t.tag === F.tag)
+    && (!F.imp || t.important) && (!F.pri || t.priority === F.pri) && (!F.tag || t.tag === F.tag) && (!F.proj || t.project === F.proj)
     && ({all:true, over:t.due && t.due < T, today:t.due === T, week:t.due && t.due >= T && t.due <= addDays(T,7), later:t.due > addDays(T,7), none:!t.due})[F.due]);
-  const k = {due:cmpDue, priority:cmp, created:(x,y) => y.created - x.created}[F.sort];
+  const k = {due:cmpDue, priority:cmp, created:(x,y) => y.created - x.created, done:(x,y) => (y.doneAt||0) - (x.doneAt||0)}[F.sort] || cmpDue;
   a.sort((x,y) => (F.sort === 'due' && (!x.due || !y.due) && x.due !== y.due) ? (x.due ? -1 : 1) : F.dir * k(x,y));
   const seg = (key, opts) => `<div class="seg">${opts.map(([v,l]) => `<button data-f="${key}:${v}" class="${F[key]==v?'on':''}">${l}</button>`).join('')}</div>`;
   return `<div class="head" style="padding-bottom:14px"><div><h2>すべてのタスク</h2><div class="sub">${a.length} 件を表示中（全${S.tasks.length}件）</div></div></div>
@@ -520,9 +609,10 @@ function vAll(){
     <div><label>期日</label>${seg('due',[['all','すべて'],['over','期限切れ'],['today','今日'],['week','7日以内'],['later','それ以降'],['none','なし']])}</div>
     <div><label>重要</label>${seg('imp',[[0,'すべて'],[1,'★ 重要']])}</div>
     <div><label>優先度</label>${seg('pri',[[0,'すべて'],[3,'高'],[2,'中'],[1,'低']])}</div>
+    ${S.projects.length ? `<div><label>プロジェクト</label><select data-fs="proj"><option value="">すべて</option>${S.projects.map(x => `<option value="${x.id}" ${F.proj===x.id?'selected':''}>${esc(x.name)}</option>`).join('')}</select></div>` : ''}
     ${tags.length ? `<div><label>タグ</label><select data-fs="tag"><option value="">すべて</option>${tags.map(x => `<option ${F.tag===x?'selected':''}>${esc(x)}</option>`).join('')}</select></div>` : ''}
-    <div><label>並び替え</label><div style="display:flex;gap:6px">${seg('sort',[['due','期日'],['priority','優先度'],['created','追加順']])}<button class="ib" data-f="dir:" title="昇順/降順" style="background:var(--panel)">${F.dir>0?'↑':'↓'}</button></div></div>
-  </div>` + (a.length ? a.map(t => row(t, t.done ? [] : ['today','tomorrow'])).join('') : '<div class="empty"><div class="em">🔍</div><b>条件に合うタスクがありません</b></div>');
+    <div><label>並び替え</label><div style="display:flex;gap:6px">${seg('sort',[['due','期日'],['priority','優先度'],['created','発行日'],['done','完了日']])}<button class="ib" data-f="dir:" title="昇順/降順" style="background:var(--panel)">${F.dir>0?'↑':'↓'}</button></div></div>
+  </div>` + (a.length ? a.map(t => row(t, t.done ? [] : ['today','tomorrow'], false, true)).join('') : '<div class="empty"><div class="em">🔍</div><b>条件に合うタスクがありません</b></div>');
 }
 function vInbox(){
   const T = today(), a = open().filter(t => !t.due && t.plan !== T).sort(cmp);
@@ -535,10 +625,15 @@ function vCal(){
   for (let i = 0; i < 42; i++) {
     const d = new Date(start); d.setDate(start.getDate()+i); if (i === 35 && d.getMonth() !== M-1) break;
     const s = ymd(d), it = S.tasks.filter(t => t.due === s).sort((a,b) => a.done - b.done || b.priority - a.priority);
+    const mm = S.ms.filter(m => m.date === s && projOk(m)).sort(msCmp);
+    const evs = [
+      ...mm.map(m => { const c = projById(m.project).color; return `<div class="ev ms ${m.done?'done':''}" data-msopen="${m.id}" style="--ec:${c};--ec-s:${c}22" title="${esc(m.title)}">${m.type === 'mtg' ? '●' : '◆'} ${m.time ? esc(m.time) + ' ' : ''}${esc(m.title)}</div>`; }),
+      ...it.map(t => `<div class="ev p${t.priority} ${t.done?'done':''}" draggable="true" data-card="${t.id}" data-open="${t.id}" title="${esc(t.title)}">${esc(t.title)}</div>`)
+    ];
     cells += `<div class="day ${d.getMonth()!==M-1?'out':''} ${s===T?'today':''} ${d.getDay()===0?'sun':d.getDay()===6?'sat':''}" data-day="${s}"><div class="dn">${d.getDate()}</div>
-      ${it.slice(0,3).map(t => `<div class="ev p${t.priority} ${t.done?'done':''}" draggable="true" data-card="${t.id}" data-open="${t.id}" title="${esc(t.title)}">${esc(t.title)}</div>`).join('')}${it.length>3?`<div class="more">他 ${it.length-3} 件</div>`:''}</div>`;
+      ${evs.slice(0,3).join('')}${evs.length>3?`<div class="more">他 ${evs.length-3} 件</div>`:''}</div>`;
   }
-  return `<div class="ch"><button class="ib" data-cal="-1">◀</button><h3>${Y}年${M}月</h3><button class="ib" data-cal="1">▶</button><button class="btn ghost sm" data-cal="0">今月</button><span class="sh" style="margin:0 0 0 auto">ドラッグで日付変更 / 空きをクリックで追加</span></div><div class="cal">${WD.map(w => `<div class="dow">${w}</div>`).join('')}${cells}</div>`;
+  return `<div class="ch"><button class="ib" data-cal="-1">◀</button><h3>${Y}年${M}月</h3><button class="ib" data-cal="1">▶</button><button class="btn ghost sm" data-cal="0">今月</button><span class="sh" style="margin:0 0 0 auto">◆マイルストン ●会議　／　ドラッグで日付変更・空きをクリックで追加</span></div><div class="cal">${WD.map(w => `<div class="dow">${w}</div>`).join('')}${cells}</div>`;
 }
 function vSearch(){
   const k = q.toLowerCase(), a = S.tasks.filter(t => (t.title + t.note + t.tag + (t.links||[]).join(' ') + t.subs.map(s => s.t).join(' ')).toLowerCase().includes(k)).sort((a,b) => a.done - b.done || cmp(a,b));
@@ -549,10 +644,202 @@ function render(){
   document.documentElement.dataset.theme = S.theme;
   renderSide();
   const el = $('#content'), sc = el.scrollTop;
-  el.innerHTML = '<div class="wrap">' + (q && S.nav !== 'links' ? vSearch() : ({today:vToday, soon:vSoon, all:vAll, cal:vCal, inbox:vInbox, links:vLinks})[S.nav]()) + '</div>';
+  el.innerHTML = '<div class="wrap">' + (q && !['links','memo'].includes(S.nav) ? vSearch() : ({today:vToday, soon:vSoon, all:vAll, cal:vCal, inbox:vInbox, week:vWeek, projects:vProjects, memo:vMemo, links:vLinks})[S.nav]()) + '</div>';
   el.scrollTop = sc;
 }
 
+
+/* ===== weekly report ===== */
+function weekData(off){
+  const {mon, sun} = weekRange(off), nmon = addDays(mon,7), nsun = addDays(mon,13), inW = x => x >= mon && x <= sun;
+  const done = S.tasks.filter(t => t.done && t.doneAt && inW(dayOf(t.doneAt))).sort((a,b) => a.doneAt - b.doneAt);
+  const created = S.tasks.filter(t => inW(dayOf(t.created)));
+  const msW = S.ms.filter(m => projOk(m) && inW(m.date)).sort(msCmp);
+  const nextT = open().filter(t => t.due && t.due >= nmon && t.due <= nsun).sort(cmpDue);
+  const nextM = S.ms.filter(m => !m.done && projOk(m) && m.date >= nmon && m.date <= nsun).sort(msCmp);
+  const carry = open().filter(t => t.due && t.due <= sun).sort(cmpDue);
+  return {mon, sun, nmon, nsun, done, created, msW, nextT, nextM, carry};
+}
+function weekText(off){
+  const W = weekData(off), f = s => s.replace(/-/g, '/');
+  const pn = t => (projById(t.project) || {}).name || '個人・その他';
+  const L = [`週報　${f(W.mon)}（月）〜 ${f(W.sun).slice(5)}（日）`, ''];
+  L.push(`■ 今週の実施内容（完了 ${W.done.length}件）`);
+  if (!W.done.length) L.push('・なし');
+  const g = {}; W.done.forEach(t => (g[pn(t)] ||= []).push(t));
+  [...S.projects.map(x => x.name), '個人・その他'].filter(n => g[n]).forEach(n => { L.push(`【${n}】`); g[n].forEach(t => L.push(`・${t.title}（${mdT(t.doneAt)}）`)); });
+  L.push('', '■ 会議・マイルストン');
+  if (!W.msW.length) L.push('・なし');
+  W.msW.forEach(m => L.push(`・${fmtMD(m.date)}${m.time ? ' ' + m.time : ''} [${m.type === 'mtg' ? '会議' : 'マイルストン'}${m.done ? '・完了' : ''}] ${m.title}（${projById(m.project).name}）`));
+  L.push('', '■ 来週の予定');
+  const nx = [...W.nextM.map(m => ({d: m.date, s: `・${fmtMD(m.date)}${m.time ? ' ' + m.time : ''} [${m.type === 'mtg' ? '会議' : 'マイルストン'}] ${m.title}（${projById(m.project).name}）`})), ...W.nextT.map(t => ({d: t.due, s: `・${fmtMD(t.due)} ${t.title}${t.project && projById(t.project) ? '（' + projById(t.project).name + '）' : ''}`}))].sort((a,b) => a.d.localeCompare(b.d));
+  if (!nx.length) L.push('・なし'); nx.forEach(x => L.push(x.s));
+  L.push('', '■ 未完了・持ち越し');
+  if (!W.carry.length) L.push('・なし');
+  W.carry.forEach(t => L.push(`・${t.title}（期限 ${fmtMD(t.due)}）`));
+  L.push('', '■ 所感・課題', '・');
+  return L.join('\n');
+}
+function vWeek(){
+  const off = S.weekOff || 0, W = weekData(off), T = today();
+  const byDay = {}; W.done.forEach(t => (byDay[dayOf(t.doneAt)] ||= []).push(t));
+  const days = Object.keys(byDay).sort();
+  return `<div class="head" style="padding-bottom:14px"><div><h2>週報</h2><div class="sub">${fmtMD(W.mon)} 〜 ${fmtMD(W.sun)}${W.mon <= T && T <= W.sun ? '　（今週）' : ''}</div></div>
+      <div style="margin-left:auto;display:flex;gap:6px"><button class="ib" data-week="-1" title="前の週">◀</button><button class="btn ghost sm" data-week="0">今週</button><button class="ib" data-week="1" title="次の週">▶</button></div></div>
+    <div class="kp"><span class="tag">完了 ${W.done.length}件</span><span class="tag">発行 ${W.created.length}件</span><span class="tag">会議・マイルストン ${W.msW.length}件</span><span class="tag">持ち越し ${W.carry.length}件</span></div>
+    <div class="wk-panel"><div class="sh" style="margin-bottom:8px">週報テキスト（編集してからコピーできます）<span class="sp"></span><button class="btn sm" data-act="weekcopy">コピー</button><button class="btn ghost sm" data-act="weekdl">.txt で保存</button></div>
+      <textarea class="wtext" id="weekText" spellcheck="false">${esc(weekText(off))}</textarea></div>` +
+    (days.length ? days.map(d => sec(fmtMD(d), byDay[d].map(t => ({html: row(t, [], false, true)})))).join('') : `<div class="empty"><b>この週に完了したタスクはありません</b></div>`) +
+    sec('会議・マイルストン', W.msW.map(m => ({html: msRow(m)})));
+}
+
+/* ===== projects ===== */
+function tlHTML(list){
+  const T = today(), ids = list.map(x => x.id), items = S.ms.filter(m => ids.includes(m.project));
+  if (!items.length) return '';
+  let start = addDays(T,-14), end = addDays(T,90);
+  const opn = items.filter(m => !m.done).map(m => m.date).sort();
+  if (opn.length) { if (opn[0] < start) start = addDays(opn[0] < addDays(T,-180) ? addDays(T,-180) : opn[0], -3); const l = opn[opn.length-1]; if (l > addDays(end,-14)) end = addDays(l,14); }
+  if (end > addDays(T,540)) end = addDays(T,540);
+  const span = Math.max(1, Math.round((parseD(end) - parseD(start)) / 864e5)), pos = d => Math.min(100, Math.max(0, (parseD(d) - parseD(start)) / 864e5 / span * 100));
+  let months = '', lines = '';
+  const c = parseD(start); c.setDate(1); c.setMonth(c.getMonth()+1);
+  for (; ymd(c) <= end; c.setMonth(c.getMonth()+1)) { const k = ymd(c); months += `<span style="left:${pos(k)}%">${c.getMonth()+1}月</span>`; lines += `<i class="tl-mline" style="left:${pos(k)}%"></i>`; }
+  const rows = list.map(p => `<div class="tl-row"><div class="tl-name" data-proj="${p.id}" title="${esc(p.name)}"><span class="pdot" style="background:${p.color}"></span>${esc(p.name)}</div>
+    <div class="tl-track">${lines}${T >= start && T <= end ? `<i class="tl-today" style="left:${pos(T)}%" title="今日"></i>` : ''}${items.filter(m => m.project === p.id && m.date >= start && m.date <= end).map(m => `<i class="mk ${m.type === 'mtg' ? 'cir' : 'dia'} ${m.done ? 'dn' : ''} ${!m.done && m.date < T ? 'od' : ''}" style="left:${pos(m.date)}%;--pc:${p.color}" data-msopen="${m.id}" title="${fmtMD(m.date)} ${m.type === 'mtg' ? '会議' : 'マイルストン'}：${esc(m.title)}"></i>`).join('')}</div></div>`).join('');
+  return `<div class="tl"><div class="tl-row tl-axis"><div></div><div class="tl-track">${months}</div></div>${rows}<div class="tl-legend"><span>◆ マイルストン</span><span>● 会議</span><span class="red">｜ 今日</span></div></div>`;
+}
+function pjStats(p){
+  const ts = S.tasks.filter(t => t.project === p.id), dn = ts.filter(t => t.done).length;
+  const nx = S.ms.filter(m => m.project === p.id && !m.done).sort(msCmp)[0];
+  return {total: ts.length, done: dn, pct: ts.length ? dn / ts.length : 0, next: nx};
+}
+function vProjects(){
+  if (S.proj && projById(S.proj)) return vProject(projById(S.proj));
+  const T = today(), act = S.projects.filter(x => !x.archived), arch = S.projects.filter(x => x.archived);
+  const card = x => { const st = pjStats(x), n = st.next;
+    return `<div class="pcard" data-proj="${x.id}" style="--pc:${x.color}"><div class="pc-h"><span class="pdot" style="background:${x.color}"></span><b>${esc(x.name)}</b><span class="pc-n">${st.done}/${st.total}</span></div>
+      <div class="pc-bar"><i style="width:${st.pct*100}%"></i></div>
+      <div class="pc-next">${n ? `${n.type === 'mtg' ? '●' : '◆'} <b class="${n.date < T ? 'od' : ''}">${fmtMD(n.date)}</b> ${esc(n.title)}` : '<span class="muted">マイルストン未登録</span>'}</div></div>`; };
+  let h = `<div class="head" style="padding-bottom:16px"><div><h2>プロジェクト</h2><div class="sub">${act.length} 件進行中　全体のマイルストンと会議をここで一元管理します</div></div><button class="btn" data-pjadd="1" style="margin-left:auto">＋ プロジェクトを追加</button></div>`;
+  if (!S.projects.length) return h + `<div class="empty"><b>大きな案件をプロジェクトとして登録しましょう</b>マイルストン（いつまでに何をやるか）や重要会議を登録しておくと、先のやることの忘れを防げます</div>`;
+  h += tlHTML(act);
+  h += `<div class="pgrid">${act.map(card).join('')}</div>`;
+  const up = S.ms.filter(m => !m.done && projOk(m)).sort(msCmp), g = {};
+  up.forEach(m => (g[m.date.slice(0,7)] ||= []).push(m));
+  h += `<div class="sh" style="margin:24px 2px 10px">今後のマイルストン・会議（全プロジェクト）<span class="sp"></span></div>` + (up.length ? Object.keys(g).sort().map(k => sec(`${+k.slice(0,4)}年${+k.slice(5)}月`, g[k].map(m => ({html: msRow(m)})))).join('') : '<div class="empty" style="padding:20px 0"><b>登録されていません</b>プロジェクトを開いて、マイルストンや会議を追加してください</div>');
+  if (arch.length) h += `<div class="sh" style="margin:24px 2px 10px">完了したプロジェクト<span class="c">${arch.length}</span></div><div class="pgrid">${arch.map(card).join('')}</div>`;
+  return h;
+}
+function vProject(p){
+  const st = pjStats(p), ms = S.ms.filter(m => m.project === p.id).sort(msCmp), tasks = S.tasks.filter(t => t.project === p.id);
+  const openT = tasks.filter(t => !t.done).sort(cmpDue), doneT = tasks.filter(t => t.done).sort((a,b) => b.doneAt - a.doneAt);
+  const openM = ms.filter(m => !m.done), doneM = ms.filter(m => m.done);
+  let h = `<div class="head" style="padding-bottom:10px"><button class="ib" data-proj="" title="一覧へ" style="background:var(--panel)">◀</button><span class="pdot big" style="background:${p.color}"></span>
+    <div><h2>${esc(p.name)}${p.archived ? '<small class="arch">完了</small>' : ''}</h2><div class="sub">${esc(p.desc || '')}</div></div>
+    <div class="pring">${ring(st.pct, 64, 7, p.color, 'var(--line)')}<b>${Math.round(st.pct*100)}%</b></div></div>
+    <div class="pj-actions"><button class="btn sm" data-msadd="mile:${p.id}">◆ マイルストン</button><button class="btn sm" data-msadd="mtg:${p.id}">● 会議</button><button class="btn ghost sm" data-pjtask="${p.id}">＋ タスク</button><button class="btn ghost sm" data-pjedit="${p.id}">✎ 編集</button></div>`;
+  h += tlHTML([p]);
+  h += sec('マイルストン・会議', openM.map(m => ({html: msRow(m, false)})));
+  if (!openM.length) h += `<div class="empty" style="padding:24px 0"><b>マイルストン・会議が未登録です</b>「いつまでに何をやるか」と重要な会議を登録しましょう</div>`;
+  h += sec('タスク', openT.map(t => ({html: row(t, ['today','tomorrow'])})));
+  if (!openT.length) h += `<div class="sh" style="margin:6px 2px 14px">未完了のタスクはありません（上の入力欄から追加すると、このプロジェクトのタスクになります）</div>`;
+  if (doneM.length || doneT.length) h += `<div class="sec"><div class="sh">完了済み<span class="c">${doneM.length + doneT.length}</span><span class="sp"></span><button data-act="pjshow">${S.pjShowDone ? '隠す' : '表示'}</button></div>${S.pjShowDone ? doneM.map(m => msRow(m, false)).join('') + doneT.map(t => row(t, [], false, true)).join('') : ''}</div>`;
+  return h;
+}
+function openProjectModal(id){
+  const cur = id ? projById(id) : null, x = cur ? {...cur} : {id:uid(), name:'', desc:'', color:PCOL[S.projects.length % PCOL.length], archived:false}, L = $('#layer');
+  const draw = () => { L.innerHTML = `<div class="scrim" id="scrim"><div class="modal" style="width:min(480px,94vw)">
+    <div class="f"><label>プロジェクト名</label><input type="text" class="big" id="pName" placeholder="例）新製品Aの開発" value="${esc(x.name)}"></div>
+    <div class="f"><label>概要（任意）</label><textarea id="pDesc" placeholder="目的・ゴールなど">${esc(x.desc)}</textarea></div>
+    <div class="f"><label>色</label><div class="colors">${PCOL.map(c => `<button class="cdot ${x.color === c ? 'on' : ''}" data-c="${c}" style="background:${c}"></button>`).join('')}</div></div>
+    ${cur ? `<div class="f"><label>状態</label><div class="seg"><button data-ar="0" class="${!x.archived ? 'on' : ''}">進行中</button><button data-ar="1" class="${x.archived ? 'on' : ''}">完了（アーカイブ）</button></div></div>` : ''}
+    <div class="mf">${cur ? '<button class="btn danger sm" id="pDel">削除</button>' : ''}<span class="sp"></span><button class="btn ghost" id="pCancel">キャンセル</button><button class="btn" id="pSave">保存</button></div></div></div>`; };
+  const sync = () => { x.name = $('#pName').value; x.desc = $('#pDesc').value; };
+  const close = () => L.innerHTML = '';
+  const commit = () => { sync(); x.name = x.name.trim(); if (!x.name) return $('#pName').focus(); if (cur) Object.assign(cur, x); else { S.projects.push(x); S.proj = x.id; S.nav = 'projects'; } save(); close(); render(); };
+  draw();
+  L.onclick = e => {
+    if (e.target.id === 'scrim' || e.target.id === 'pCancel') return close();
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.c) { sync(); x.color = b.dataset.c; draw(); }
+    else if (b.dataset.ar !== undefined) { sync(); x.archived = b.dataset.ar === '1'; draw(); }
+    else if (b.id === 'pSave') commit();
+    else if (b.id === 'pDel') {
+      if (!confirm('このプロジェクトを削除します。\n・マイルストン／会議は削除されます\n・タスクはプロジェクトなしで残ります\n\nよろしいですか？')) return;
+      S.ms = S.ms.filter(m => m.project !== x.id); S.tasks.forEach(t => { if (t.project === x.id) t.project = ''; }); S.projects = S.projects.filter(y => y.id !== x.id); if (S.proj === x.id) S.proj = ''; save(); close(); render();
+    }
+  };
+  L.onkeydown = e => { if (e.key === 'Escape') { e.stopPropagation(); close(); } else if (e.key === 'Enter' && e.target.id === 'pName' && !e.isComposing) commit(); else if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') commit(); };
+  setTimeout(() => $('#pName')?.focus(), 30);
+}
+function openMsModal(id, preset){
+  if (!S.projects.length) { toast('先にプロジェクトを作成してください'); return openProjectModal(); }
+  const cur = id ? S.ms.find(y => y.id === id) : null, L = $('#layer');
+  const m = cur ? {...cur} : Object.assign({id:uid(), type:'mile', project: (projById(S.proj) ? S.proj : (S.projects.find(y => !y.archived) || S.projects[0]).id), title:'', date:'', time:'', note:'', done:false}, preset || {});
+  const draw = () => { L.innerHTML = `<div class="scrim" id="scrim"><div class="modal" style="width:min(480px,94vw)">
+    <div class="f"><div class="seg">${[['mile','◆ マイルストン'],['mtg','● 重要会議']].map(([k,l]) => `<button data-ty="${k}" class="${m.type === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
+    <div class="f"><label>${m.type === 'mtg' ? '会議名' : 'いつまでに何をやるか'}</label><input type="text" class="big" id="mmTitle" placeholder="${m.type === 'mtg' ? '例）キックオフ会議' : '例）基本設計の完了'}" value="${esc(m.title)}"></div>
+    <div class="g2"><div class="f"><label>日付</label><input type="date" id="mmDate" value="${m.date}"><div class="qc"><button data-md="0">今日</button><button data-md="7">1週間後</button><button data-md="30">1か月後</button></div></div>
+      <div class="f"><label>時刻（任意）</label><input type="text" id="mmTime" placeholder="例）14:00" value="${esc(m.time)}"></div></div>
+    <div class="f"><label>プロジェクト</label><select id="mmProj">${S.projects.map(y => `<option value="${y.id}" ${m.project === y.id ? 'selected' : ''}>${esc(y.name)}${y.archived ? '（完了）' : ''}</option>`).join('')}</select></div>
+    <div class="f"><label>メモ（任意）</label><textarea id="mmNote" placeholder="達成条件・場所・参加者など">${esc(m.note)}</textarea></div>
+    ${cur ? `<div class="f"><label class="ck"><input type="checkbox" id="mmDone" ${m.done ? 'checked' : ''}> ${m.type === 'mtg' ? '実施済み' : '達成済み'}</label></div>` : ''}
+    <div class="mf">${cur ? '<button class="btn danger sm" id="mmDel">削除</button>' : ''}<span class="sp"></span><button class="btn ghost" id="mmCancel">キャンセル</button><button class="btn" id="mmSave">保存</button></div></div></div>`; };
+  const sync = () => { m.title = $('#mmTitle').value; m.date = $('#mmDate').value; m.time = $('#mmTime').value.trim(); m.project = $('#mmProj').value; m.note = $('#mmNote').value; if ($('#mmDone')) m.done = $('#mmDone').checked; };
+  const close = () => L.innerHTML = '';
+  const commit = () => { sync(); m.title = m.title.trim(); if (!m.title) return $('#mmTitle').focus(); if (!m.date) return $('#mmDate').focus(); if (cur) Object.assign(cur, m); else S.ms.push(m); save(); close(); render(); };
+  draw();
+  L.onclick = e => {
+    if (e.target.id === 'scrim' || e.target.id === 'mmCancel') return close();
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.ty) { sync(); m.type = b.dataset.ty; draw(); }
+    else if (b.dataset.md) { sync(); m.date = addDays(today(), +b.dataset.md); draw(); }
+    else if (b.id === 'mmSave') commit();
+    else if (b.id === 'mmDel') { const i = S.ms.findIndex(y => y.id === m.id), [d] = S.ms.splice(i,1); save(); close(); render(); toast('削除しました', '元に戻す', () => { S.ms.splice(i,0,d); save(); render(); }); }
+  };
+  L.onkeydown = e => { if (e.key === 'Escape') { e.stopPropagation(); close(); } else if (e.key === 'Enter' && !e.isComposing && e.target.tagName !== 'TEXTAREA') commit(); else if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') commit(); };
+  setTimeout(() => $('#mmTitle')?.focus(), 30);
+}
+
+/* ===== memo ===== */
+function vMemo(){
+  const k = q.toLowerCase(), tagF = S.memoTag;
+  const all = S.memos.slice().sort((a,b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || b.updated - a.updated);
+  const tags = [...new Set(S.memos.flatMap(x => memoTags(x.text)))].sort();
+  const list = all.filter(x => (!k || x.text.toLowerCase().includes(k)) && (!tagF || memoTags(x.text).includes(tagF)));
+  const card = x => { const lines = x.text.split(/\r?\n/), title = lines[0].trim(), body = lines.slice(1).join('\n').trim();
+    return `<div class="mcard ${x.pinned ? 'pin' : ''}" data-memoopen="${x.id}"><div class="macts"><button data-act="memopin" data-id="${x.id}" title="ピン留め">${x.pinned ? '★' : '☆'}</button><button data-act="memotask" data-id="${x.id}" title="タスクにする">✓</button><button data-act="memodel" data-id="${x.id}" title="削除">✕</button></div>
+      <b>${esc(title) || '(無題)'}</b>${body ? `<p>${esc(body)}</p>` : ''}<div class="mf2">${memoTags(x.text).map(t => `<span class="pill t" data-mtag="${esc(t)}">#${esc(t)}</span>`).join('')}<span>${mdT(x.updated)}</span></div></div>`; };
+  return `<div class="head" style="padding-bottom:14px"><div><h2>メモ</h2><div class="sub">${S.memos.length} 件　思いついたことを、とりあえず書き留めておく場所です</div></div></div>
+    <div class="mcap"><textarea id="memoIn" rows="2" placeholder="アイデア・気づき・メモ…（1行目がタイトル／#タグ で分類／Ctrl+Enter で保存）"></textarea><button class="btn" data-act="memoadd">保存</button></div>` +
+    (tags.length ? `<div class="mtags"><button class="pill ${!tagF ? 't' : ''}" data-mtag="">すべて</button>${tags.map(t => `<button class="pill ${tagF === t ? 't' : ''}" data-mtag="${esc(t)}">#${esc(t)}</button>`).join('')}</div>` : '') +
+    (list.length ? `<div class="mgrid">${list.map(card).join('')}</div>` : `<div class="empty"><b>${S.memos.length ? '見つかりませんでした' : 'まだメモはありません'}</b>${S.memos.length ? '' : '上の欄に思いついたことを書いて保存してください'}</div>`);
+}
+function addMemo(text){ text = (text || '').trim(); if (!text) return false; const n = Date.now(); S.memos.unshift({id:uid(), text, pinned:false, created:n, updated:n}); save(); render(); return true; }
+function memoToTask(x){
+  const lines = x.text.split(/\r?\n/), t = addTask({title: lines[0].replace(/#[^\s#]+/g, '').trim().slice(0, 100) || 'メモから', note: lines.slice(1).join('\n').trim(), tag: memoTags(x.text)[0] || ''});
+  toast('「あとで」にタスクを追加しました');
+}
+function openMemoModal(id){
+  const cur = S.memos.find(y => y.id === id); if (!cur) return;
+  const x = {...cur}, L = $('#layer');
+  L.innerHTML = `<div class="scrim" id="scrim"><div class="modal" style="width:min(560px,94vw)">
+    <div class="f"><label>メモ（1行目がタイトル）</label><textarea id="mmText" style="min-height:240px;font-size:14.5px">${esc(x.text)}</textarea></div>
+    <div class="mf"><button class="btn danger sm" id="mmDel2">削除</button><button class="btn ghost sm" id="mmTask">✓ タスクにする</button><button class="btn ghost sm" id="mmPin">${x.pinned ? '★ ピン留め中' : '☆ ピン留め'}</button><span class="sp"></span><button class="btn ghost" id="mmCancel2">キャンセル</button><button class="btn" id="mmSave2">保存</button></div></div></div>`;
+  const close = () => L.innerHTML = '';
+  const commit = () => { const v = $('#mmText').value.trim(); if (!v) return $('#mmText').focus(); if (v !== cur.text) { cur.text = v; cur.updated = Date.now(); } cur.pinned = x.pinned; save(); close(); render(); };
+  L.onclick = e => {
+    if (e.target.id === 'scrim' || e.target.id === 'mmCancel2') return close();
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.id === 'mmSave2') commit();
+    else if (b.id === 'mmPin') { x.pinned = !x.pinned; b.textContent = x.pinned ? '★ ピン留め中' : '☆ ピン留め'; }
+    else if (b.id === 'mmTask') { cur.text = $('#mmText').value.trim() || cur.text; memoToTask(cur); save(); close(); render(); }
+    else if (b.id === 'mmDel2') { const i = S.memos.findIndex(y => y.id === cur.id), [d] = S.memos.splice(i,1); save(); close(); render(); toast('削除しました', '元に戻す', () => { S.memos.splice(i,0,d); save(); render(); }); }
+  };
+  L.onkeydown = e => { if (e.key === 'Escape') { e.stopPropagation(); close(); } else if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') commit(); };
+  setTimeout(() => { const i = $('#mmText'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 30);
+}
 
 /* ===== link collection ===== */
 const LKC = ['#5b6cff','#8a5cff','#e0559c','#f0506e','#ff9f43','#2fbf8f','#00a6b8','#4f8cff'];
@@ -609,7 +896,8 @@ function openModal(id, preset){
         <div class="qc"><button data-qd="0">今日</button><button data-qd="1">明日</button><button data-qd="w">来週</button><button data-qd="x">なし</button></div></div>
       <div class="f"><label>優先度</label><div class="seg">${[3,2,1].map(p => `<button data-p="${p}" class="p${p} ${t.priority===p?'on':''}">${PRI[p]}</button>`).join('')}</div>
         <button class="impbtn ${t.important?'on':''}" data-imp="1">★ 重要<small>期限に関わらず「今日」に表示</small></button></div></div>
-    <div class="f"><label>🏷 タグ</label><input type="text" id="mTag" list="tl" placeholder="例）営業、開発" value="${esc(t.tag)}"><datalist id="tl">${tags.map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
+    <div class="g2"><div class="f"><label>🏷 タグ</label><input type="text" id="mTag" list="tl" placeholder="例）営業、開発" value="${esc(t.tag)}"><datalist id="tl">${tags.map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
+      <div class="f"><label>📁 プロジェクト</label><select id="mProj"><option value="">なし（個人タスク）</option>${S.projects.map(x => `<option value="${x.id}" ${t.project === x.id ? 'selected' : ''}>${esc(x.name)}${x.archived ? '（完了）' : ''}</option>`).join('')}</select></div></div>
     <div class="f"><label>🔁 くり返し</label><div class="seg">${[['','なし'],['daily','毎日'],['weekday','平日'],['weekly','毎週'],['monthly','毎月']].map(([k,l]) => `<button data-rp="${k}" class="${(t.repeat||'')===k?'on':''}">${l}</button>`).join('')}</div>
       ${t.repeat ? `<div class="hint" style="font-size:11px;color:var(--muted);margin-top:5px">完了すると、次の${REP[t.repeat]}の分が自動で作られます${t.due ? '' : '（期日を入れてください）'}</div>` : ''}</div>
     <div class="f"><label>🔗 参照リンク・メール</label><div>${t.links.map((v,i) => `<div class="sr2"><input type="text" data-lt="${i}" value="${esc(v)}" placeholder="URL、フォルダのパス、メールの件名など"><button class="x" data-lo="${i}" title="開く / コピー">↗</button><button class="x" data-lx="${i}">✕</button></div>`).join('')}</div>
@@ -618,10 +906,11 @@ function openModal(id, preset){
     <div class="f"><label>小さく分ける（サブタスク）</label><div>${t.subs.map((s,i) => `<div class="sr2"><input type="checkbox" data-sc="${i}" ${s.d?'checked':''}><input type="text" data-st="${i}" value="${esc(s.t)}" placeholder="最初の一歩は？"><button class="x" data-sx="${i}">✕</button></div>`).join('')}</div>
       <button class="btn ghost sm" id="mSubAdd">＋ 追加</button></div>
     <div class="f"><label>メモ</label><textarea id="mNote" placeholder="リンクや補足など">${esc(t.note)}</textarea></div></details>
+    ${isNew ? '' : `<div class="dates">発行日 <b>${dayOf(t.created).replace(/-/g,'/')}</b>${t.done ? `　完了日 <input type="date" id="mDoneAt" value="${t.doneAt ? dayOf(t.doneAt) : today()}">` : ''}</div>`}
     <div class="mf">${isNew ? '' : '<button class="btn danger sm" id="mDel">削除</button>'}<span class="sp">Ctrl+Enter 保存 ／ Esc 閉じる</span><button class="btn ghost" id="mCancel">キャンセル</button><button class="btn" id="mSave">保存</button></div></div></div>`; };
-  const sync = () => { t.title = $('#mTitle').value; t.due = $('#mDue').value; t.tag = $('#mTag').value.trim().replace(/^#/,''); t.note = $('#mNote').value; L.querySelectorAll('[data-st]').forEach(i => t.subs[+i.dataset.st].t = i.value); L.querySelectorAll('[data-lt]').forEach(i => t.links[+i.dataset.lt] = i.value); };
+  const sync = () => { t.title = $('#mTitle').value; t.due = $('#mDue').value; t.tag = $('#mTag').value.trim().replace(/^#/,''); t.note = $('#mNote').value; t.project = $('#mProj').value; if (t.done && $('#mDoneAt') && $('#mDoneAt').value && $('#mDoneAt').value !== dayOf(t.doneAt || Date.now())) t.doneAt = parseD($('#mDoneAt').value).getTime() + 12*3600e3; L.querySelectorAll('[data-st]').forEach(i => t.subs[+i.dataset.st].t = i.value); L.querySelectorAll('[data-lt]').forEach(i => t.links[+i.dataset.lt] = i.value); };
   const close = () => L.innerHTML = '';
-  const commit = () => { sync(); t.title = t.title.trim(); if (!t.title) return $('#mTitle').focus(); t.subs = t.subs.filter(s => s.t.trim()); t.links = t.links.map(cleanLink).filter(Boolean); if (isNew) S.tasks.unshift(t); else Object.assign(byId(t.id), t); save(); close(); render(); };
+  const commit = () => { sync(); t.title = t.title.trim(); if (!t.title) return $('#mTitle').focus(); t.subs = t.subs.filter(s => s.t.trim()); t.links = t.links.map(cleanLink).filter(Boolean); if (isNew) S.tasks.unshift(t); else { const cur = byId(t.id); if (cur.done && t.done && cur.doneAt && dayOf(cur.doneAt) !== dayOf(t.doneAt)) { const a = dayOf(cur.doneAt), b = dayOf(t.doneAt); if (S.hist[a] > 0) S.hist[a]--; S.hist[b] = (S.hist[b]||0) + 1; } Object.assign(cur, t); } save(); close(); render(); };
   draw();
   L.onclick = e => {
     if (e.target.id === 'scrim') return close();
@@ -653,6 +942,13 @@ function openModal(id, preset){
 document.addEventListener('click', e => {
   const t = e.target;
   const nav = t.closest('[data-nav]'); if (nav) { S.nav = nav.dataset.nav; q = ''; $('#q').value = ''; return render(); }
+  const pjc = t.closest('[data-proj]'); if (pjc) { e.stopPropagation(); S.nav = 'projects'; S.proj = pjc.dataset.proj; q = ''; $('#q').value = ''; save(); return render(); }
+  if (t.closest('[data-pjadd]')) return openProjectModal();
+  const pje = t.closest('[data-pjedit]'); if (pje) return openProjectModal(pje.dataset.pjedit);
+  const msa = t.closest('[data-msadd]'); if (msa) { const [ty, pr] = msa.dataset.msadd.split(':'); return openMsModal(null, {type: ty, project: pr}); }
+  const pjt = t.closest('[data-pjtask]'); if (pjt) return openModal(null, {project: pjt.dataset.pjtask});
+  const wkb = t.closest('[data-week]'); if (wkb) { const v = +wkb.dataset.week; S.weekOff = v === 0 ? 0 : (S.weekOff || 0) + v; save(); return render(); }
+  const mtg = t.closest('[data-mtag]'); if (mtg && !t.closest('[data-act]')) { e.stopPropagation(); S.memoTag = S.memoTag === mtg.dataset.mtag ? '' : mtg.dataset.mtag; save(); return render(); }
   const le = t.closest('[data-lkedit]'); if (le) { e.stopPropagation(); return openLinkModal(le.dataset.lkedit); }
   const lgo = t.closest('[data-lkgo]'); if (lgo) { const x = S.links.find(y => y.id === lgo.dataset.lkgo); if (x) openLink(x.url); return; }
   if (t.closest('[data-lkadd]')) return openLinkModal();
@@ -666,18 +962,28 @@ document.addEventListener('click', e => {
     else if (k === 'star') { const x = byId(id); x.important = !x.important; save(); render(); }
     else if (['today','tomorrow','nextweek','plan','unplan'].includes(k)) resched(id, k);
     else if (k === 'goall') { S.nav = 'all'; S.f.st = 'open'; S.f.due = a.dataset.v; S.f.pri = 0; S.f.tag = ''; save(); render(); }
+    else if (k === 'msdone') { const m = S.ms.find(y => y.id === id); if (m) { m.done = !m.done; save(); render(); toast(m.done ? (m.type === 'mtg' ? '実施済みにしました' : '達成しました') : '未完了に戻しました'); } }
+    else if (k === 'pjshow') { S.pjShowDone = !S.pjShowDone; save(); render(); }
+    else if (k === 'memoadd') { const el = $('#memoIn'); if (el && addMemo(el.value)) { toast('メモを保存しました'); } }
+    else if (k === 'memopin') { const x = S.memos.find(y => y.id === id); if (x) { x.pinned = !x.pinned; save(); render(); } }
+    else if (k === 'memotask') { const x = S.memos.find(y => y.id === id); if (x) { memoToTask(x); } }
+    else if (k === 'memodel') { const i = S.memos.findIndex(y => y.id === id); if (i >= 0) { const [d] = S.memos.splice(i,1); save(); render(); toast('削除しました', '元に戻す', () => { S.memos.splice(i,0,d); save(); render(); }); } }
+    else if (k === 'weekcopy') { const el = $('#weekText'); if (el) copyText(el.value).then(() => toast('週報をコピーしました'), () => toast('コピーできませんでした')); }
+    else if (k === 'weekdl') { const el = $('#weekText'); if (el) { const r = weekData(S.weekOff || 0), a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + el.value], {type:'text/plain;charset=utf-8'})); a.download = `週報_${r.mon}.txt`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); } }
     else if (k === 'togDone') { S.showDone = !S.showDone; save(); render(); }
     else if (k === 'cap') { const v = prompt('1日にできる作業時間（時間）を入力', S.cap/60); const n = parseFloat(v); if (n > 0) { S.cap = Math.round(n*60); save(); render(); } }
     else if (k === 'clrDone') { if (confirm('完了済みタスクをすべて削除します。（達成記録の数字は残ります）')) { S.tasks = S.tasks.filter(x => !x.done); save(); render(); } }
     return; }
   const cal = t.closest('[data-cal]');
   if (cal) { const [Y,M] = S.calMonth.split('-').map(Number), n = +cal.dataset.cal; S.calMonth = n === 0 ? today().slice(0,7) : ymd(new Date(Y,M-1+n,1)).slice(0,7); return render(); }
+  const mso = t.closest('[data-msopen]'); if (mso) return openMsModal(mso.dataset.msopen);
+  const mmo = t.closest('[data-memoopen]'); if (mmo) return openMemoModal(mmo.dataset.memoopen);
   const o = t.closest('[data-open]'); if (o) return openModal(o.dataset.open);
   const day = t.closest('[data-day]'); if (day) return openModal(null, {due: day.dataset.day});
   if (t.closest('#bTheme')) { S.theme = S.theme === 'dark' ? 'light' : 'dark'; save(); return render(); }
   if (t.closest('#bExp')) return exportData();
   if (t.closest('#bImp')) return fileIn.click();
-  if (t.closest('#bReset')) { if (confirm('すべてのタスク・リンク・記録を削除して初期状態に戻します。元に戻せません。（必要なら先に ⬇ でバックアップしてください）本当に削除しますか？')) { S.tasks = []; S.links = []; S.hist = {}; S.nav = 'today'; save(); try { localStorage.removeItem('taskflow.v1'); } catch(e){} render(); toast('初期化しました'); } return; }
+  if (t.closest('#bReset')) { if (confirm('すべてのタスク・プロジェクト・メモ・リンク・記録を削除して初期状態に戻します。元に戻せません。（必要なら先に ⬇ でバックアップしてください）本当に削除しますか？')) { S.tasks = []; S.links = []; S.projects = []; S.ms = []; S.memos = []; S.hist = {}; S.nav = 'today'; S.proj = ''; save(); try { localStorage.removeItem('taskflow.v1'); } catch(e){} render(); toast('初期化しました'); } return; }
 });
 let dragId = null;
 document.addEventListener('change', e => { const x = e.target.dataset.fs; if (x) { S.f[x] = e.target.value; save(); render(); } });
@@ -689,15 +995,15 @@ document.addEventListener('drop', e => { const z = e.target.closest('[data-day]'
 const qa = $('#qa');
 function renderParse(){
   const v = qa.value.trim();
-  if (!v) { $('#parse').innerHTML = '<span>書き方：</span><span class="tag">今日 / 明日 / 金曜 / 10/25</span><span class="tag">!重要</span><span class="tag">!高 !中 !低</span><span class="tag">#タグ</span><span class="tag">毎日 / 毎週月曜 / 毎月25日</span><span>日付なしは「あとで」に入ります</span>'; return; }
+  if (!v) { $('#parse').innerHTML = '<span>書き方：</span><span class="tag">今日 / 明日 / 金曜 / 10/25</span><span class="tag">!重要</span><span class="tag">!高 !中 !低</span><span class="tag">#タグ</span><span class="tag">毎日 / 毎週月曜 / 毎月25日</span><span class="tag">@プロジェクト名</span><span>日付なしは「あとで」に入ります</span>'; return; }
   const r = parseQuick(v);
-  $('#parse').innerHTML = '<span>→</span>' + (r.due ? `<span class="tag">📅 ${dueInfo(r.due).full}</span>` : '<span class="tag">📥 あとで</span>') + (r.important ? '<span class="tag p3">★ 重要</span>' : '') + (r.hasPri ? `<span class="tag p${r.priority}">優先度 ${PRI[r.priority]}</span>` : '') + (r.tag ? `<span class="tag">#${esc(r.tag)}</span>` : '') + (r.links.length ? `<span class="tag">🔗 リンク${r.links.length}件</span>` : '') + (r.repeat ? `<span class="tag">🔁 ${REP[r.repeat]}</span>` : '');
+  $('#parse').innerHTML = '<span>→</span>' + (r.due ? `<span class="tag">📅 ${dueInfo(r.due).full}</span>` : '<span class="tag">📥 あとで</span>') + (r.important ? '<span class="tag p3">★ 重要</span>' : '') + (r.hasPri ? `<span class="tag p${r.priority}">優先度 ${PRI[r.priority]}</span>` : '') + (r.tag ? `<span class="tag">#${esc(r.tag)}</span>` : '') + (r.links.length ? `<span class="tag">🔗 リンク${r.links.length}件</span>` : '') + (r.repeat ? `<span class="tag">🔁 ${REP[r.repeat]}</span>` : '') + (r.project ? `<span class="tag">📁 ${esc(projById(r.project).name)}</span>` : (S.nav === 'projects' && projById(S.proj) ? `<span class="tag">📁 ${esc(projById(S.proj).name)}</span>` : ''));
 }
 function submitQuick(detail){
   const r = parseQuick(qa.value); if (!r.title && !r.links.length && !detail) return;
   if (!r.title && r.links.length) r.title = linkInfo(r.links[0]).label;
   qa.value = ''; renderParse();
-  const o = {title:r.title, due:r.due, priority:r.priority, important:r.important, tag:r.tag, links:r.links, repeat:r.repeat};
+  const o = {title:r.title, due:r.due, priority:r.priority, important:r.important, tag:r.tag, links:r.links, repeat:r.repeat, project: r.project || (S.nav === 'projects' && projById(S.proj) ? S.proj : '')};
   if (detail) return openModal(null, o);
   addTask(o); toast(r.due ? `追加しました（${dueInfo(r.due).full}）` : '「あとで」に追加しました'); qa.focus();
 }
@@ -706,21 +1012,22 @@ qa.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.isComposing) {
 $('#qb').onclick = () => submitQuick(false); $('#qd').onclick = () => submitQuick(true);
 $('#q').addEventListener('input', e => { q = e.target.value.trim(); render(); });
 document.addEventListener('keydown', e => {
+  if (e.target.id === 'memoIn' && (e.ctrlKey||e.metaKey) && e.key === 'Enter') { e.preventDefault(); if (addMemo(e.target.value)) toast('メモを保存しました'); return; }
   if ((e.ctrlKey||e.metaKey) && e.key.toLowerCase() === 'f') { e.preventDefault(); $('#q').focus(); return; }
   if (e.key === 'Escape') { document.activeElement.blur(); if (q) { q = ''; $('#q').value = ''; render(); } return; }
   if (/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName) || $('#layer').firstChild) return;
   if (e.key === '/') { e.preventDefault(); qa.focus(); }
   else if (e.key.toLowerCase() === 'n') { e.preventDefault(); openModal(); }
-  else if ('123456'.includes(e.key)) { S.nav = ['today','soon','all','cal','inbox','links'][+e.key-1]; q = ''; $('#q').value = ''; render(); }
+  else if ('123456789'.includes(e.key) && e.key) { S.nav = ['today','soon','all','cal','inbox','week','projects','memo','links'][+e.key-1]; q = ''; $('#q').value = ''; render(); }
 });
 
 function exportData(){
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([JSON.stringify({app:'taskflow', version:2, data:S}, null, 2)], {type:'application/json'}));
+  a.href = URL.createObjectURL(new Blob([JSON.stringify({app:'taskflow', version:3, data:S}, null, 2)], {type:'application/json'}));
   a.download = `taskflow-backup-${today()}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); toast('バックアップを書き出しました');
 }
 const fileIn = Object.assign(document.createElement('input'), {type:'file', accept:'.json', hidden:true}); document.body.appendChild(fileIn);
-fileIn.onchange = () => { const f = fileIn.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { try { const d = JSON.parse(r.result).data; if (!Array.isArray(d.tasks)) throw 0; if (!confirm(`${d.tasks.length}件のタスクを読み込みます。現在のデータは置き換わります。`)) return; S = Object.assign(S, d); save(); render(); toast('読み込みました'); } catch(e){ toast('読み込めないファイルです'); } fileIn.value = ''; }; r.readAsText(f); };
+fileIn.onchange = () => { const f = fileIn.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { try { const d = JSON.parse(r.result).data; if (!Array.isArray(d.tasks)) throw 0; if (!confirm(`${d.tasks.length}件のタスクを読み込みます。現在のデータは置き換わります。`)) return; S.links = []; S.projects = []; S.ms = []; S.memos = []; S.hist = {}; S = Object.assign(S, d); S.f = Object.assign({st:'open', imp:0, pri:0, proj:'', due:'all', tag:'', sort:'due', dir:1}, S.f); normalize(); S.proj = ''; save(); render(); toast('読み込みました'); } catch(e){ toast('読み込めないファイルです'); } fileIn.value = ''; }; r.readAsText(f); };
 document.addEventListener('visibilitychange', () => { if (!document.hidden) render(); });
 
 load(); renderParse(); render();
