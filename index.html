@@ -303,7 +303,7 @@ kbd{background:var(--panel2);border-radius:5px;padding:0 6px;font-size:11px;font
     <div class="top">
       <div class="add">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-        <input id="qa" placeholder="やることを入力して Enter　例）見積書を送る 明日 !重要 #営業" autocomplete="off">
+        <input id="qa" placeholder="やることを入力して Enter　例）FWのリグレッション結果を確認 金曜 !重要 #FW" autocomplete="off">
         <input id="q" class="sr" placeholder="🔍 検索 (Ctrl+F)" autocomplete="off">
         <button class="btn ghost sm" id="qd">詳細</button>
         <button class="btn" id="qb">追加</button>
@@ -786,7 +786,7 @@ function vProject(p){
 function openProjectModal(id){
   const cur = id ? projById(id) : null, x = cur ? {...cur} : {id:uid(), name:'', desc:'', color:PCOL[S.projects.length % PCOL.length], archived:false}, L = $('#layer');
   const draw = () => { L.innerHTML = `<div class="scrim" id="scrim"><div class="modal" style="width:min(480px,94vw)">
-    <div class="f"><label>プロジェクト名</label><input type="text" class="big" id="pName" placeholder="例）新製品Aの開発" value="${esc(x.name)}"></div>
+    <div class="f"><label>プロジェクト名</label><input type="text" class="big" id="pName" placeholder="例）Gen5 SSDコントローラ開発" value="${esc(x.name)}"></div>
     <div class="f"><label>概要（任意）</label><textarea id="pDesc" placeholder="目的・ゴールなど">${esc(x.desc)}</textarea></div>
     <div class="f"><label>色</label><div class="colors">${PCOL.map(c => `<button class="cdot ${x.color === c ? 'on' : ''}" data-c="${c}" style="background:${c}"></button>`).join('')}</div></div>
     ${cur ? `<div class="f"><label>状態</label><div class="seg"><button data-ar="0" class="${!x.archived ? 'on' : ''}">進行中</button><button data-ar="1" class="${x.archived ? 'on' : ''}">完了（アーカイブ）</button></div></div>` : ''}
@@ -815,7 +815,7 @@ function openMsModal(id, preset){
   const m = cur ? {...cur} : Object.assign({id:uid(), type:'mile', project: (projById(S.proj) ? S.proj : (S.projects.find(y => !y.archived) || S.projects[0]).id), title:'', date:'', time:'', note:'', done:false}, preset || {});
   const draw = () => { L.innerHTML = `<div class="scrim" id="scrim"><div class="modal" style="width:min(480px,94vw)">
     <div class="f"><div class="seg">${[['mile','◆ マイルストン'],['mtg','● 重要会議']].map(([k,l]) => `<button data-ty="${k}" class="${m.type === k ? 'on' : ''}">${l}</button>`).join('')}</div></div>
-    <div class="f"><label>${m.type === 'mtg' ? '会議名' : 'いつまでに何をやるか'}</label><input type="text" class="big" id="mmTitle" placeholder="${m.type === 'mtg' ? '例）キックオフ会議' : '例）基本設計の完了'}" value="${esc(m.title)}"></div>
+    <div class="f"><label>${m.type === 'mtg' ? '会議名' : 'いつまでに何をやるか'}</label><input type="text" class="big" id="mmTitle" placeholder="${m.type === 'mtg' ? '例）設計レビュー会議' : '例）FW仕様の凍結'}" value="${esc(m.title)}"></div>
     <div class="g2"><div class="f"><label>日付</label><input type="date" id="mmDate" value="${m.date}"><div class="qc"><button data-md="0">今日</button><button data-md="7">1週間後</button><button data-md="30">1か月後</button></div></div>
       <div class="f"><label>時刻（任意）</label><input type="text" id="mmTime" placeholder="例）14:00" value="${esc(m.time)}"></div></div>
     <div class="f"><label>プロジェクト</label><select id="mmProj">${S.projects.map(y => `<option value="${y.id}" ${m.project === y.id ? 'selected' : ''}>${esc(y.name)}${y.archived ? '（完了）' : ''}</option>`).join('')}</select></div>
@@ -899,9 +899,9 @@ function openLinkModal(id){
   const cur = id ? S.links.find(x => x.id === id) : null, l = cur ? {...cur} : {id:uid(), title:'', url:'', group:''};
   const groups = [...new Set((S.links||[]).map(x => x.group).filter(Boolean))], L = $('#layer');
   L.innerHTML = `<div class="scrim" id="scrim"><div class="modal" style="width:min(460px,94vw)">
-    <div class="f"><label>名前</label><input type="text" class="big" id="lTitle" placeholder="例）勤怠システム" value="${esc(l.title)}"></div>
+    <div class="f"><label>名前</label><input type="text" class="big" id="lTitle" placeholder="例）不具合管理システム" value="${esc(l.title)}"></div>
     <div class="f"><label>URL（またはフォルダのパス）</label><input type="text" id="lUrl" placeholder="https://... / \\\\server\\share\\..." value="${esc(l.url)}"><div class="hint" style="font-size:11px;color:var(--muted);margin-top:5px">URLはブラウザで開き、フォルダ／ファイルのパス（C:\\… や \\\\server\\…）はエクスプローラーで開きます</div></div>
-    <div class="f"><label>グループ（任意）</label><input type="text" id="lGroup" list="lgl" placeholder="例）社内システム、資料、よく使う" value="${esc(l.group)}"><datalist id="lgl">${groups.map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
+    <div class="f"><label>グループ（任意）</label><input type="text" id="lGroup" list="lgl" placeholder="例）社内システム、規格・仕様書、よく使う" value="${esc(l.group)}"><datalist id="lgl">${groups.map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
     <div class="mf">${cur ? '<button class="btn danger sm" id="lDel">削除</button>' : ''}<span class="sp"></span><button class="btn ghost" id="lCancel">キャンセル</button><button class="btn" id="lSave">保存</button></div></div></div>`;
   const close = () => L.innerHTML = '';
   const save_ = () => {
@@ -932,7 +932,7 @@ function openModal(id, preset){
         <div class="qc"><button data-qd="0">今日</button><button data-qd="1">明日</button><button data-qd="w">来週</button><button data-qd="x">なし</button></div></div>
       <div class="f"><label>優先度</label><div class="seg">${[3,2,1].map(p => `<button data-p="${p}" class="p${p} ${t.priority===p?'on':''}">${PRI[p]}</button>`).join('')}</div>
         <button class="impbtn ${t.important?'on':''}" data-imp="1">★ 重要<small>期限に関わらず「今日」に表示</small></button></div></div>
-    <div class="g2"><div class="f"><label>🏷 タグ</label><input type="text" id="mTag" list="tl" placeholder="例）営業、開発" value="${esc(t.tag)}"><datalist id="tl">${tags.map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
+    <div class="g2"><div class="f"><label>🏷 タグ</label><input type="text" id="mTag" list="tl" placeholder="例）FW、検証、評価" value="${esc(t.tag)}"><datalist id="tl">${tags.map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
       <div class="f"><label>📁 プロジェクト</label><select id="mProj"><option value="">なし（個人タスク）</option>${S.projects.map(x => `<option value="${x.id}" ${taskProj(t) === x.id ? 'selected' : ''}>${esc(x.name)}${x.archived ? '（完了）' : ''}</option>`).join('')}</select></div></div>
     ${S.projects.length ? '<div class="hint2" style="margin:-8px 0 12px">タグをプロジェクト名と同じにすると、自動でそのプロジェクトのタスクになります</div>' : ''}
     <div class="f"><label>🔁 くり返し</label><div class="seg">${[['','なし'],['daily','毎日'],['weekday','平日'],['weekly','毎週'],['monthly','毎月']].map(([k,l]) => `<button data-rp="${k}" class="${(t.repeat||'')===k?'on':''}">${l}</button>`).join('')}</div>
