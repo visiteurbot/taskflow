@@ -182,6 +182,24 @@ svg{display:block}
 .macts button{width:22px;height:22px;border-radius:6px;font-size:12px;color:var(--muted)}.macts button:hover{background:var(--panel2);color:var(--accent)}
 .dates{font-size:12px;color:var(--muted);margin-top:4px}.dates b{color:var(--text)}.dates input{padding:3px 8px;border-radius:8px;border:0;background:var(--panel2);font-size:12px;margin-left:4px}
 .ck{display:flex!important;align-items:center;gap:8px;font-size:13px!important;color:var(--text)!important}.ck input{width:17px;height:17px;accent-color:var(--accent)}
+.pj-block{background:var(--panel);border-radius:18px;box-shadow:var(--shadow);margin-bottom:14px;overflow:hidden;border-top:4px solid var(--pc)}
+.pj-bh{display:flex;align-items:center;gap:8px;padding:14px 18px 6px;cursor:pointer;flex-wrap:wrap}
+.pj-bh b{font-size:16px;margin-right:6px}
+.pst{font-size:12px;font-weight:700;background:var(--panel2);color:var(--muted);border-radius:99px;padding:1px 10px}.pst.red{background:var(--high-soft);color:var(--high)}
+.pj-bh .go{margin-left:auto;font-size:12px;color:var(--muted)}
+.pj-pb{height:5px;background:var(--line);border-radius:9px;margin:4px 18px 8px;overflow:hidden}.pj-pb i{display:block;height:100%;background:var(--pc);border-radius:9px}
+.pj-cols{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 24px;padding:2px 18px 14px}
+.pj-col h5{margin:8px 0 4px;font-size:11.5px;color:var(--muted);letter-spacing:.4px}
+.ci{display:flex;align-items:center;gap:8px;padding:5px 6px;border-radius:8px;cursor:pointer;font-size:13px}
+.ci:hover{background:var(--panel2)}
+.cd{flex:none;width:76px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}.cd.od{color:var(--high);font-weight:700}.cd.soon{color:var(--mid);font-weight:700}
+.ck2{flex:none;color:var(--pc);font-size:11px}
+.ct{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cn{flex:none;font-size:11px;color:var(--muted)}.cn.od{color:var(--high)}.cn.soon{color:var(--mid)}
+.ci.more{color:var(--accent);font-weight:600}.ci.none{color:var(--muted);cursor:default}.ci.none:hover{background:none}
+.sugg2{background:var(--panel2);border:1.5px dashed var(--line);border-radius:16px;padding:14px 16px;margin:18px 0}
+.hint2{font-size:11px;color:var(--muted);margin-top:8px}
+@media (max-width:900px){.pj-cols{grid-template-columns:1fr}}
 /* sections & rows */
 .sec{margin-bottom:22px}
 .sh{display:flex;align-items:center;gap:8px;margin:0 2px 9px;font-weight:700;font-size:13px;color:var(--muted)}
@@ -354,6 +372,11 @@ function streak(){
 /* ===== projects / dates helpers ===== */
 const PCOL = ['#5b6cff','#8a5cff','#e0559c','#f0506e','#ff9f43','#2fbf8f','#00a6b8','#4f8cff'];
 const projById = id => S.projects.find(p => p.id === id);
+const taskProj = t => {
+  if (t.project && projById(t.project)) return t.project;
+  const k = (t.tag || '').trim().toLowerCase(); if (!k) return '';
+  const x = S.projects.find(y => y.name.trim().toLowerCase() === k); return x ? x.id : '';
+};
 const projOk = m => { const p = projById(m.project); return !!p && !p.archived; };
 const msCmp = (a,b) => a.date.localeCompare(b.date) || (a.time||'').localeCompare(b.time||'');
 const dayOf = ms => ymd(new Date(ms));
@@ -523,8 +546,8 @@ function ring(p, size, w, col, bg){
   return `<svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}"><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${bg}" stroke-width="${w}"/><circle cx="${size/2}" cy="${size/2}" r="${r}" fill="none" stroke="${col}" stroke-width="${w}" stroke-linecap="round" stroke-dasharray="${L*p} ${L}" transform="rotate(-90 ${size/2} ${size/2})" style="transition:stroke-dasharray .6s"/></svg>`;
 }
 function meta(t, dates = false){
-  const ds = t.subs.filter(s=>s.d).length, pj = t.project ? projById(t.project) : null;
-  return `${pj ? `<span class="pill pj" style="--pc:${pj.color};--pcs:${pj.color}22" data-proj="${pj.id}">${esc(pj.name)}</span>` : ''}${t.tag ? `<span class="pill t" data-tag="${esc(t.tag)}">#${esc(t.tag)}</span>` : ''}${t.subs.length ? `<span class="prog"><i><b style="width:${ds/t.subs.length*100}%"></b></i>${ds}/${t.subs.length}</span>` : ''}${(t.links||[]).slice(0,2).map((v,i) => { const L = linkInfo(v); return `<span class="lk" data-lk="${t.id}:${i}" title="${esc(v)}">${L.icon} ${esc(L.label)}</span>`; }).join('')}${(t.links||[]).length > 2 ? `<span>+${t.links.length-2}</span>` : ''}${t.repeat ? `<span class="pill rp">🔁 ${REP[t.repeat]}</span>` : ''}${t.note ? '<span title="メモあり">📝</span>' : ''}${dates || t.done ? `<span class="dt" title="発行日">発行 ${mdT(t.created)}</span>` : ''}${t.done && t.doneAt ? `<span class="dt ok" title="完了日">完了 ${mdT(t.doneAt)}</span>` : ''}`;
+  const ds = t.subs.filter(s=>s.d).length, pj = projById(taskProj(t)) || null, tagIsPj = !!pj && (t.tag || '').trim().toLowerCase() === pj.name.trim().toLowerCase();
+  return `${pj ? `<span class="pill pj" style="--pc:${pj.color};--pcs:${pj.color}22" data-proj="${pj.id}">${esc(pj.name)}</span>` : ''}${t.tag && !tagIsPj ? `<span class="pill t" data-tag="${esc(t.tag)}">#${esc(t.tag)}</span>` : ''}${t.subs.length ? `<span class="prog"><i><b style="width:${ds/t.subs.length*100}%"></b></i>${ds}/${t.subs.length}</span>` : ''}${(t.links||[]).slice(0,2).map((v,i) => { const L = linkInfo(v); return `<span class="lk" data-lk="${t.id}:${i}" title="${esc(v)}">${L.icon} ${esc(L.label)}</span>`; }).join('')}${(t.links||[]).length > 2 ? `<span>+${t.links.length-2}</span>` : ''}${t.repeat ? `<span class="pill rp">🔁 ${REP[t.repeat]}</span>` : ''}${t.note ? '<span title="メモあり">📝</span>' : ''}${dates || t.done ? `<span class="dt" title="発行日">発行 ${mdT(t.created)}</span>` : ''}${t.done && t.doneAt ? `<span class="dt ok" title="完了日">完了 ${mdT(t.doneAt)}</span>` : ''}`;
 }
 function row(t, acts = [], always = false, dates = false){
   const di = t.due ? dueInfo(t.due) : null;
@@ -598,7 +621,7 @@ function vSoon(){
 function vAll(){
   const F = S.f, T = today(), tags = [...new Set(S.tasks.map(t => t.tag).filter(Boolean))].sort();
   let a = S.tasks.filter(t => (F.st === 'all' || (F.st === 'done') === t.done)
-    && (!F.imp || t.important) && (!F.pri || t.priority === F.pri) && (!F.tag || t.tag === F.tag) && (!F.proj || t.project === F.proj)
+    && (!F.imp || t.important) && (!F.pri || t.priority === F.pri) && (!F.tag || t.tag === F.tag) && (!F.proj || taskProj(t) === F.proj)
     && ({all:true, over:t.due && t.due < T, today:t.due === T, week:t.due && t.due >= T && t.due <= addDays(T,7), later:t.due > addDays(T,7), none:!t.due})[F.due]);
   const k = {due:cmpDue, priority:cmp, created:(x,y) => y.created - x.created, done:(x,y) => (y.doneAt||0) - (x.doneAt||0)}[F.sort] || cmpDue;
   a.sort((x,y) => (F.sort === 'due' && (!x.due || !y.due) && x.due !== y.due) ? (x.due ? -1 : 1) : F.dir * k(x,y));
@@ -662,7 +685,7 @@ function weekData(off){
 }
 function weekText(off){
   const W = weekData(off), f = s => s.replace(/-/g, '/');
-  const pn = t => (projById(t.project) || {}).name || '個人・その他';
+  const pn = t => (projById(taskProj(t)) || {}).name || '個人・その他';
   const L = [`週報　${f(W.mon)}（月）〜 ${f(W.sun).slice(5)}（日）`, ''];
   L.push(`■ 今週の実施内容（完了 ${W.done.length}件）`);
   if (!W.done.length) L.push('・なし');
@@ -672,7 +695,7 @@ function weekText(off){
   if (!W.msW.length) L.push('・なし');
   W.msW.forEach(m => L.push(`・${fmtMD(m.date)}${m.time ? ' ' + m.time : ''} [${m.type === 'mtg' ? '会議' : 'マイルストン'}${m.done ? '・完了' : ''}] ${m.title}（${projById(m.project).name}）`));
   L.push('', '■ 来週の予定');
-  const nx = [...W.nextM.map(m => ({d: m.date, s: `・${fmtMD(m.date)}${m.time ? ' ' + m.time : ''} [${m.type === 'mtg' ? '会議' : 'マイルストン'}] ${m.title}（${projById(m.project).name}）`})), ...W.nextT.map(t => ({d: t.due, s: `・${fmtMD(t.due)} ${t.title}${t.project && projById(t.project) ? '（' + projById(t.project).name + '）' : ''}`}))].sort((a,b) => a.d.localeCompare(b.d));
+  const nx = [...W.nextM.map(m => ({d: m.date, s: `・${fmtMD(m.date)}${m.time ? ' ' + m.time : ''} [${m.type === 'mtg' ? '会議' : 'マイルストン'}] ${m.title}（${projById(m.project).name}）`})), ...W.nextT.map(t => ({d: t.due, s: `・${fmtMD(t.due)} ${t.title}${taskProj(t) ? '（' + projById(taskProj(t)).name + '）' : ''}`}))].sort((a,b) => a.d.localeCompare(b.d));
   if (!nx.length) L.push('・なし'); nx.forEach(x => L.push(x.s));
   L.push('', '■ 未完了・持ち越し');
   if (!W.carry.length) L.push('・なし');
@@ -710,29 +733,42 @@ function tlHTML(list){
   return `<div class="tl"><div class="tl-row tl-axis"><div></div><div class="tl-track">${months}</div></div>${rows}<div class="tl-legend"><span>◆ マイルストン</span><span>● 会議</span><span class="red">｜ 今日</span></div></div>`;
 }
 function pjStats(p){
-  const ts = S.tasks.filter(t => t.project === p.id), dn = ts.filter(t => t.done).length;
+  const ts = S.tasks.filter(t => taskProj(t) === p.id), dn = ts.filter(t => t.done).length, T = today();
   const nx = S.ms.filter(m => m.project === p.id && !m.done).sort(msCmp)[0];
-  return {total: ts.length, done: dn, pct: ts.length ? dn / ts.length : 0, next: nx};
+  return {total: ts.length, done: dn, open: ts.length - dn, over: ts.filter(t => !t.done && t.due && t.due < T).length, pct: ts.length ? dn / ts.length : 0, next: nx};
+}
+function tagSuggest(){
+  const names = new Set(S.projects.map(x => x.name.trim().toLowerCase())), c = {};
+  S.tasks.forEach(t => { if (t.tag && !t.done && !names.has(t.tag.trim().toLowerCase())) c[t.tag] = (c[t.tag] || 0) + 1; });
+  const ks = Object.keys(c).sort(); if (!ks.length) return '';
+  return `<div class="sugg2"><div class="sh" style="margin:0 0 8px">個人タスクのタグをプロジェクトにする</div><div class="mtags" style="margin:0">${ks.map(k => `<button class="pill" data-tag2pj="${esc(k)}">＋ #${esc(k)}（${c[k]}件）</button>`).join('')}</div><div class="hint2">タグと同じ名前のプロジェクトを作ると、そのタグのタスクが自動でプロジェクトに入ります</div></div>`;
+}
+function pjBlock(x){
+  const st = pjStats(x), T = today();
+  const ms = S.ms.filter(m => m.project === x.id && !m.done).sort(msCmp), ts = S.tasks.filter(t => taskProj(t) === x.id && !t.done).sort(cmpDue);
+  const rel = d => { if (!d) return ['', '']; const n = diff(d), c = n < 0 ? 'od' : n <= 3 ? 'soon' : ''; return [c, n < 0 ? `${-n}日超過` : n === 0 ? '今日' : `あと${n}日`]; };
+  const msL = ms.slice(0, 6).map(m => { const [c, r] = rel(m.date); return `<div class="ci" data-msopen="${m.id}"><span class="cd ${c}">${fmtMD(m.date)}</span><span class="ck2">${m.type === 'mtg' ? '●' : '◆'}</span><span class="ct">${m.time ? esc(m.time) + ' ' : ''}${esc(m.title)}</span><span class="cn ${c}">${r}</span></div>`; }).join('');
+  const tsL = ts.slice(0, 6).map(t => { const [c, r] = rel(t.due); return `<div class="ci" data-open="${t.id}"><span class="cd ${c}">${t.due ? fmtMD(t.due) : '期日なし'}</span><span class="ct">${t.important ? '★ ' : ''}${esc(t.title)}</span><span class="cn ${c}">${r}</span></div>`; }).join('');
+  return `<div class="pj-block" style="--pc:${x.color}">
+    <div class="pj-bh" data-proj="${x.id}"><span class="pdot" style="background:${x.color}"></span><b>${esc(x.name)}</b>
+      <span class="pst">未完了 ${st.open}</span>${st.over ? `<span class="pst red">期限切れ ${st.over}</span>` : ''}<span class="pst">完了 ${st.done}</span><span class="pst">予定 ${ms.length}</span><span class="go">開く ›</span></div>
+    <div class="pj-pb"><i style="width:${st.pct * 100}%"></i></div>
+    <div class="pj-cols">
+      <div class="pj-col"><h5>◆ マイルストン・会議（${ms.length}）</h5>${msL || '<div class="ci none">登録なし</div>'}${ms.length > 6 ? `<div class="ci more" data-proj="${x.id}">他 ${ms.length - 6} 件を見る ›</div>` : ''}</div>
+      <div class="pj-col"><h5>✓ タスク（未完了 ${ts.length}）</h5>${tsL || '<div class="ci none">未完了のタスクはありません</div>'}${ts.length > 6 ? `<div class="ci more" data-proj="${x.id}">他 ${ts.length - 6} 件を見る ›</div>` : ''}</div>
+    </div></div>`;
 }
 function vProjects(){
   if (S.proj && projById(S.proj)) return vProject(projById(S.proj));
-  const T = today(), act = S.projects.filter(x => !x.archived), arch = S.projects.filter(x => x.archived);
-  const card = x => { const st = pjStats(x), n = st.next;
-    return `<div class="pcard" data-proj="${x.id}" style="--pc:${x.color}"><div class="pc-h"><span class="pdot" style="background:${x.color}"></span><b>${esc(x.name)}</b><span class="pc-n">${st.done}/${st.total}</span></div>
-      <div class="pc-bar"><i style="width:${st.pct*100}%"></i></div>
-      <div class="pc-next">${n ? `${n.type === 'mtg' ? '●' : '◆'} <b class="${n.date < T ? 'od' : ''}">${fmtMD(n.date)}</b> ${esc(n.title)}` : '<span class="muted">マイルストン未登録</span>'}</div></div>`; };
-  let h = `<div class="head" style="padding-bottom:16px"><div><h2>プロジェクト</h2><div class="sub">${act.length} 件進行中　全体のマイルストンと会議をここで一元管理します</div></div><button class="btn" data-pjadd="1" style="margin-left:auto">＋ プロジェクトを追加</button></div>`;
-  if (!S.projects.length) return h + `<div class="empty"><b>大きな案件をプロジェクトとして登録しましょう</b>マイルストン（いつまでに何をやるか）や重要会議を登録しておくと、先のやることの忘れを防げます</div>`;
-  h += tlHTML(act);
-  h += `<div class="pgrid">${act.map(card).join('')}</div>`;
-  const up = S.ms.filter(m => !m.done && projOk(m)).sort(msCmp), g = {};
-  up.forEach(m => (g[m.date.slice(0,7)] ||= []).push(m));
-  h += `<div class="sh" style="margin:24px 2px 10px">今後のマイルストン・会議（全プロジェクト）<span class="sp"></span></div>` + (up.length ? Object.keys(g).sort().map(k => sec(`${+k.slice(0,4)}年${+k.slice(5)}月`, g[k].map(m => ({html: msRow(m)})))).join('') : '<div class="empty" style="padding:20px 0"><b>登録されていません</b>プロジェクトを開いて、マイルストンや会議を追加してください</div>');
-  if (arch.length) h += `<div class="sh" style="margin:24px 2px 10px">完了したプロジェクト<span class="c">${arch.length}</span></div><div class="pgrid">${arch.map(card).join('')}</div>`;
+  const act = S.projects.filter(x => !x.archived), arch = S.projects.filter(x => x.archived), T = today();
+  let h = `<div class="head" style="padding-bottom:16px"><div><h2>プロジェクト</h2><div class="sub">${act.length} 件進行中　全体のマイルストンと会議、タスクをここで一元管理します</div></div><button class="btn" data-pjadd="1" style="margin-left:auto">＋ プロジェクトを追加</button></div>`;
+  if (!S.projects.length) return h + `<div class="empty"><b>大きな案件をプロジェクトとして登録しましょう</b>マイルストン（いつまでに何をやるか）や重要会議を登録しておくと、先のやることの忘れを防げます</div>` + tagSuggest();
+  h += tlHTML(act) + act.map(pjBlock).join('') + tagSuggest();
+  if (arch.length) h += `<div class="sh" style="margin:24px 2px 10px">完了したプロジェクト<span class="c">${arch.length}</span></div><div class="pgrid">${arch.map(x => { const st = pjStats(x); return `<div class="pcard" data-proj="${x.id}" style="--pc:${x.color}"><div class="pc-h"><span class="pdot" style="background:${x.color}"></span><b>${esc(x.name)}</b><span class="pc-n">${st.done}/${st.total}</span></div><div class="pc-bar"><i style="width:${st.pct * 100}%"></i></div></div>`; }).join('')}</div>`;
   return h;
 }
 function vProject(p){
-  const st = pjStats(p), ms = S.ms.filter(m => m.project === p.id).sort(msCmp), tasks = S.tasks.filter(t => t.project === p.id);
+  const st = pjStats(p), ms = S.ms.filter(m => m.project === p.id).sort(msCmp), tasks = S.tasks.filter(t => taskProj(t) === p.id);
   const openT = tasks.filter(t => !t.done).sort(cmpDue), doneT = tasks.filter(t => t.done).sort((a,b) => b.doneAt - a.doneAt);
   const openM = ms.filter(m => !m.done), doneM = ms.filter(m => m.done);
   let h = `<div class="head" style="padding-bottom:10px"><button class="ib" data-proj="" title="一覧へ" style="background:var(--panel)">◀</button><span class="pdot big" style="background:${p.color}"></span>
@@ -757,7 +793,7 @@ function openProjectModal(id){
     <div class="mf">${cur ? '<button class="btn danger sm" id="pDel">削除</button>' : ''}<span class="sp"></span><button class="btn ghost" id="pCancel">キャンセル</button><button class="btn" id="pSave">保存</button></div></div></div>`; };
   const sync = () => { x.name = $('#pName').value; x.desc = $('#pDesc').value; };
   const close = () => L.innerHTML = '';
-  const commit = () => { sync(); x.name = x.name.trim(); if (!x.name) return $('#pName').focus(); if (cur) Object.assign(cur, x); else { S.projects.push(x); S.proj = x.id; S.nav = 'projects'; } save(); close(); render(); };
+  const commit = () => { sync(); x.name = x.name.trim(); if (!x.name) return $('#pName').focus(); if (cur) { if (cur.name !== x.name) S.tasks.forEach(t => { if ((t.tag || '').trim().toLowerCase() === cur.name.trim().toLowerCase()) t.tag = x.name; }); Object.assign(cur, x); } else { S.projects.push(x); S.proj = x.id; S.nav = 'projects'; } save(); close(); render(); };
   draw();
   L.onclick = e => {
     if (e.target.id === 'scrim' || e.target.id === 'pCancel') return close();
@@ -889,7 +925,7 @@ function openLinkModal(id){
 /* ===== modal ===== */
 function openModal(id, preset){
   const isNew = !id, t = id ? JSON.parse(JSON.stringify(byId(id))) : mk(preset || {}); t.links = t.links || [];
-  const L = $('#layer'), tags = [...new Set(S.tasks.map(x => x.tag).filter(Boolean))];
+  const L = $('#layer'), tags = [...new Set([...S.projects.map(x => x.name), ...S.tasks.map(x => x.tag).filter(Boolean)])];
   const draw = () => { L.innerHTML = `<div class="scrim" id="scrim"><div class="modal">
     <div class="f"><input type="text" class="big" id="mTitle" placeholder="やること" value="${esc(t.title)}"></div>
     <div class="g2"><div class="f"><label>いつまでに</label><input type="date" id="mDue" value="${t.due}">
@@ -897,7 +933,8 @@ function openModal(id, preset){
       <div class="f"><label>優先度</label><div class="seg">${[3,2,1].map(p => `<button data-p="${p}" class="p${p} ${t.priority===p?'on':''}">${PRI[p]}</button>`).join('')}</div>
         <button class="impbtn ${t.important?'on':''}" data-imp="1">★ 重要<small>期限に関わらず「今日」に表示</small></button></div></div>
     <div class="g2"><div class="f"><label>🏷 タグ</label><input type="text" id="mTag" list="tl" placeholder="例）営業、開発" value="${esc(t.tag)}"><datalist id="tl">${tags.map(x => `<option value="${esc(x)}">`).join('')}</datalist></div>
-      <div class="f"><label>📁 プロジェクト</label><select id="mProj"><option value="">なし（個人タスク）</option>${S.projects.map(x => `<option value="${x.id}" ${t.project === x.id ? 'selected' : ''}>${esc(x.name)}${x.archived ? '（完了）' : ''}</option>`).join('')}</select></div></div>
+      <div class="f"><label>📁 プロジェクト</label><select id="mProj"><option value="">なし（個人タスク）</option>${S.projects.map(x => `<option value="${x.id}" ${taskProj(t) === x.id ? 'selected' : ''}>${esc(x.name)}${x.archived ? '（完了）' : ''}</option>`).join('')}</select></div></div>
+    ${S.projects.length ? '<div class="hint2" style="margin:-8px 0 12px">タグをプロジェクト名と同じにすると、自動でそのプロジェクトのタスクになります</div>' : ''}
     <div class="f"><label>🔁 くり返し</label><div class="seg">${[['','なし'],['daily','毎日'],['weekday','平日'],['weekly','毎週'],['monthly','毎月']].map(([k,l]) => `<button data-rp="${k}" class="${(t.repeat||'')===k?'on':''}">${l}</button>`).join('')}</div>
       ${t.repeat ? `<div class="hint" style="font-size:11px;color:var(--muted);margin-top:5px">完了すると、次の${REP[t.repeat]}の分が自動で作られます${t.due ? '' : '（期日を入れてください）'}</div>` : ''}</div>
     <div class="f"><label>🔗 参照リンク・メール</label><div>${t.links.map((v,i) => `<div class="sr2"><input type="text" data-lt="${i}" value="${esc(v)}" placeholder="URL、フォルダのパス、メールの件名など"><button class="x" data-lo="${i}" title="開く / コピー">↗</button><button class="x" data-lx="${i}">✕</button></div>`).join('')}</div>
@@ -942,6 +979,7 @@ function openModal(id, preset){
 document.addEventListener('click', e => {
   const t = e.target;
   const nav = t.closest('[data-nav]'); if (nav) { S.nav = nav.dataset.nav; q = ''; $('#q').value = ''; return render(); }
+  const t2p = t.closest('[data-tag2pj]'); if (t2p) { const nm = t2p.dataset.tag2pj; if (!S.projects.some(x => x.name.trim().toLowerCase() === nm.trim().toLowerCase())) { S.projects.push({id:uid(), name:nm, desc:'', color:PCOL[S.projects.length % PCOL.length], archived:false}); save(); render(); toast(`プロジェクト「${nm}」を作成しました`); } return; }
   const pjc = t.closest('[data-proj]'); if (pjc) { e.stopPropagation(); S.nav = 'projects'; S.proj = pjc.dataset.proj; q = ''; $('#q').value = ''; save(); return render(); }
   if (t.closest('[data-pjadd]')) return openProjectModal();
   const pje = t.closest('[data-pjedit]'); if (pje) return openProjectModal(pje.dataset.pjedit);
@@ -997,7 +1035,7 @@ function renderParse(){
   const v = qa.value.trim();
   if (!v) { $('#parse').innerHTML = '<span>書き方：</span><span class="tag">今日 / 明日 / 金曜 / 10/25</span><span class="tag">!重要</span><span class="tag">!高 !中 !低</span><span class="tag">#タグ</span><span class="tag">毎日 / 毎週月曜 / 毎月25日</span><span class="tag">@プロジェクト名</span><span>日付なしは「あとで」に入ります</span>'; return; }
   const r = parseQuick(v);
-  $('#parse').innerHTML = '<span>→</span>' + (r.due ? `<span class="tag">📅 ${dueInfo(r.due).full}</span>` : '<span class="tag">📥 あとで</span>') + (r.important ? '<span class="tag p3">★ 重要</span>' : '') + (r.hasPri ? `<span class="tag p${r.priority}">優先度 ${PRI[r.priority]}</span>` : '') + (r.tag ? `<span class="tag">#${esc(r.tag)}</span>` : '') + (r.links.length ? `<span class="tag">🔗 リンク${r.links.length}件</span>` : '') + (r.repeat ? `<span class="tag">🔁 ${REP[r.repeat]}</span>` : '') + (r.project ? `<span class="tag">📁 ${esc(projById(r.project).name)}</span>` : (S.nav === 'projects' && projById(S.proj) ? `<span class="tag">📁 ${esc(projById(S.proj).name)}</span>` : ''));
+  $('#parse').innerHTML = '<span>→</span>' + (r.due ? `<span class="tag">📅 ${dueInfo(r.due).full}</span>` : '<span class="tag">📥 あとで</span>') + (r.important ? '<span class="tag p3">★ 重要</span>' : '') + (r.hasPri ? `<span class="tag p${r.priority}">優先度 ${PRI[r.priority]}</span>` : '') + (r.tag ? `<span class="tag">#${esc(r.tag)}</span>` : '') + (r.links.length ? `<span class="tag">🔗 リンク${r.links.length}件</span>` : '') + (r.repeat ? `<span class="tag">🔁 ${REP[r.repeat]}</span>` : '') + (r.project || taskProj({tag: r.tag}) ? `<span class="tag">📁 ${esc(projById(r.project || taskProj({tag: r.tag})).name)}</span>` : (S.nav === 'projects' && projById(S.proj) ? `<span class="tag">📁 ${esc(projById(S.proj).name)}</span>` : ''));
 }
 function submitQuick(detail){
   const r = parseQuick(qa.value); if (!r.title && !r.links.length && !detail) return;
