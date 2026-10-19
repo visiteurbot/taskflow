@@ -200,6 +200,13 @@ svg{display:block}
 .sugg2{background:var(--panel2);border:1.5px dashed var(--line);border-radius:16px;padding:14px 16px;margin:18px 0}
 .hint2{font-size:11px;color:var(--muted);margin-top:8px}
 @media (max-width:900px){.pj-cols{grid-template-columns:1fr}}
+.ib{position:relative}
+.ib.ab-ready:after,.ib.ab-needperm:after,.ib.ab-error:after{content:"";position:absolute;right:5px;top:5px;width:8px;height:8px;border-radius:50%;border:2px solid var(--bg)}
+.ib.ab-ready:after{background:var(--low)}.ib.ab-needperm:after{background:var(--mid)}.ib.ab-error:after{background:var(--high)}
+.abmsg{background:var(--panel2);border-radius:12px;padding:12px 14px;margin-bottom:12px;line-height:1.7;font-size:13px}.abmsg.ok2{background:var(--low-soft)}.abmsg.warn2{background:var(--mid-soft)}
+.dl{margin-left:3px;font-size:11px;font-weight:700;color:var(--muted)}.dl.up{color:var(--low)}.dl.dn{color:var(--high)}
+.savedb{background:var(--low-soft);color:var(--low);border-radius:99px;padding:0 9px;font-size:11.5px;font-weight:700}
+.ci.rep.cur{background:var(--accent-soft)}
 /* sections & rows */
 .sec{margin-bottom:22px}
 .sh{display:flex;align-items:center;gap:8px;margin:0 2px 9px;font-weight:700;font-size:13px;color:var(--muted)}
@@ -334,7 +341,7 @@ const nextMonday = () => { const d = parseD(today()); d.setDate(d.getDate() + (8
 
 /* ===== state ===== */
 const KEY = 'taskflow.v2';
-let S = { tasks: [], nav: 'today', theme: 'light', calMonth: today().slice(0,7), hist: {}, cap: 360, showDone: false, links: [], projects: [], ms: [], memos: [], proj: '', pjShowDone: false, weekOff: 0, memoTag: '', f: {st:'open', imp:0, pri:0, proj:'', due:'all', tag:'', sort:'due', dir:1} };
+let S = { tasks: [], nav: 'today', theme: 'light', calMonth: today().slice(0,7), hist: {}, cap: 360, showDone: false, links: [], projects: [], ms: [], memos: [], reports: [], proj: '', pjShowDone: false, weekOff: 0, memoTag: '', f: {st:'open', imp:0, pri:0, proj:'', due:'all', tag:'', sort:'due', dir:1} };
 let q = '';
 const mk = o => Object.assign({id:uid(), title:'', note:'', due:'', plan:'', priority:2, important:false, project:'', tag:'', repeat:'', subs:[], links:[], done:false, doneAt:0, created:Date.now()}, o);
 const byId = id => S.tasks.find(t => t.id === id);
@@ -350,10 +357,10 @@ function load(){
   S.nav = 'today'; S.proj = '';
 }
 function normalize(){
-  for (const k of ['tasks','links','projects','ms','memos']) if (!Array.isArray(S[k])) S[k] = [];
+  for (const k of ['tasks','links','projects','ms','memos','reports']) if (!Array.isArray(S[k])) S[k] = [];
   S.tasks.forEach(t => { if (t.project == null) t.project = ''; if (!t.created) t.created = Date.now(); if (!Array.isArray(t.subs)) t.subs = []; if (!Array.isArray(t.links)) t.links = []; });
 }
-function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} }
+function save(){ try { localStorage.setItem(KEY, JSON.stringify(S)); } catch(e){} abSchedule(); }
 
 /* ===== derived ===== */
 const open = () => S.tasks.filter(t => !t.done);
@@ -539,7 +546,7 @@ function renderSide(){
     ${n('projects','proj','プロジェクト',S.projects.filter(x=>!x.archived).length)}
     <div class="nav-h">ノート</div>
     ${n('memo','memo','メモ',(S.memos||[]).length)}${n('links','link','リンク',(S.links||[]).length)}
-    <div class="side-foot"><button class="ib" id="bTheme" title="ライト/ダーク">${S.theme==='dark'?'☀️':'🌙'}</button><button class="ib" id="bExp" title="バックアップを書き出す">⬇</button><button class="ib" id="bImp" title="バックアップを読み込む">⬆</button><button class="ib" id="bReset" title="すべて削除（初期化）">🗑</button></div>`;
+    <div class="side-foot"><button class="ib" id="bTheme" title="ライト/ダーク">${S.theme==='dark'?'☀️':'🌙'}</button><button class="ib" id="bExp" title="バックアップを書き出す">⬇</button><button class="ib" id="bImp" title="バックアップを読み込む">⬆</button><button class="ib ab-${ab.state}" id="bBackup" title="${ab.state==='ready' ? '自動バックアップ：有効' : ab.state==='needperm' ? '自動バックアップ：許可が必要（クリック）' : '自動バックアップを設定'}">💾</button><button class="ib" id="bReset" title="すべて削除（初期化）">🗑</button></div>`;
 }
 function ring(p, size, w, col, bg){
   const r = (size - w)/2, L = 2*Math.PI*r;
@@ -683,10 +690,33 @@ function weekData(off){
   const carry = open().filter(t => t.due && t.due <= sun).sort(cmpDue);
   return {mon, sun, nmon, nsun, done, created, msW, nextT, nextM, carry};
 }
+const delta = (a, b) => { const d = a - b; return d === 0 ? '±0' : (d > 0 ? '+' : '') + d; };
+function weekStats(off){ const W = weekData(off); return {done: W.done.length, created: W.created.length, ms: W.msW.length}; }
+function pjProgressLines(W){
+  const T = today(), ref = W.sun < T ? W.sun : T, dd = (x, y) => Math.round((parseD(x) - parseD(y)) / 864e5), L = [];
+  S.projects.filter(x => !x.archived).forEach(x => {
+    const st = pjStats(x), wd = W.done.filter(t => taskProj(t) === x.id).length;
+    const open = S.ms.filter(m => m.project === x.id && !m.done).sort(msCmp);
+    const miles = open.filter(m => m.type !== 'mtg'), mtgs = open.filter(m => m.type === 'mtg');
+    if (!st.total && !open.length && !wd) return;
+    const nm = miles.find(m => m.date >= ref), nt = mtgs.find(m => m.date >= ref), od = miles.filter(m => m.date < ref);
+    const parts = [`タスク完了 ${st.done}/${st.total}（${Math.round(st.pct * 100)}%）`, `週内完了 ${wd}件`];
+    if (nm) parts.push(`次のマイルストン: ${nm.title} ${fmtMD(nm.date)}（${dd(nm.date, ref) === 0 ? '本日' : 'あと' + dd(nm.date, ref) + '日'}）`);
+    else if (!od.length) parts.push('マイルストン: 未登録または全て完了');
+    if (nt) parts.push(`次の会議: ${nt.title} ${fmtMD(nt.date)}${nt.time ? ' ' + nt.time : ''}`);
+    L.push(`【${x.name}】${parts.join('／')}`);
+    od.forEach(m => L.push(`　※期限超過: ${m.title}（${fmtMD(m.date)}・${dd(ref, m.date)}日超過）`));
+  });
+  return L;
+}
 function weekText(off){
-  const W = weekData(off), f = s => s.replace(/-/g, '/');
+  const W = weekData(off), f = s => s.replace(/-/g, '/'), pv = weekStats(off - 1);
   const pn = t => (projById(taskProj(t)) || {}).name || '個人・その他';
-  const L = [`週報　${f(W.mon)}（月）〜 ${f(W.sun).slice(5)}（日）`, ''];
+  const L = [`週報　${f(W.mon)}（月）〜 ${f(W.sun).slice(5)}（日）`, '',
+    `■ 今週の概況（先週比）`,
+    `・完了タスク ${W.done.length}件（${delta(W.done.length, pv.done)}）／発行タスク ${W.created.length}件（${delta(W.created.length, pv.created)}）／会議・マイルストン ${W.msW.length}件（${delta(W.msW.length, pv.ms)}）`, ''];
+  const pg = pjProgressLines(W);
+  if (pg.length) L.push('■ プロジェクト進捗', ...pg, '');
   L.push(`■ 今週の実施内容（完了 ${W.done.length}件）`);
   if (!W.done.length) L.push('・なし');
   const g = {}; W.done.forEach(t => (g[pn(t)] ||= []).push(t));
@@ -703,17 +733,23 @@ function weekText(off){
   L.push('', '■ 所感・課題', '・');
   return L.join('\n');
 }
+const weekOffOf = mon => Math.round((parseD(mon) - parseD(weekRange(0).mon)) / (7 * 864e5));
 function vWeek(){
-  const off = S.weekOff || 0, W = weekData(off), T = today();
+  const off = S.weekOff || 0, W = weekData(off), T = today(), pv = weekStats(off - 1);
+  const saved = (S.reports || []).find(r => r.weekStart === W.mon);
   const byDay = {}; W.done.forEach(t => (byDay[dayOf(t.doneAt)] ||= []).push(t));
   const days = Object.keys(byDay).sort();
-  return `<div class="head" style="padding-bottom:14px"><div><h2>週報</h2><div class="sub">${fmtMD(W.mon)} 〜 ${fmtMD(W.sun)}${W.mon <= T && T <= W.sun ? '　（今週）' : ''}</div></div>
+  const dl = (a, b) => { const d = a - b; return `<small class="dl ${d > 0 ? 'up' : d < 0 ? 'dn' : ''}">先週比 ${delta(a, b)}</small>`; };
+  const hist = (S.reports || []).slice().sort((a,b) => b.weekStart.localeCompare(a.weekStart));
+  return `<div class="head" style="padding-bottom:14px"><div><h2>週報</h2><div class="sub">${fmtMD(W.mon)} 〜 ${fmtMD(W.sun)}${W.mon <= T && T <= W.sun ? '　（今週）' : ''}${saved ? `　<span class="savedb">保存済み ${mdT(saved.saved)}</span>` : ''}</div></div>
       <div style="margin-left:auto;display:flex;gap:6px"><button class="ib" data-week="-1" title="前の週">◀</button><button class="btn ghost sm" data-week="0">今週</button><button class="ib" data-week="1" title="次の週">▶</button></div></div>
-    <div class="kp"><span class="tag">完了 ${W.done.length}件</span><span class="tag">発行 ${W.created.length}件</span><span class="tag">会議・マイルストン ${W.msW.length}件</span><span class="tag">持ち越し ${W.carry.length}件</span></div>
-    <div class="wk-panel"><div class="sh" style="margin-bottom:8px">週報テキスト（編集してからコピーできます）<span class="sp"></span><button class="btn sm" data-act="weekcopy">コピー</button><button class="btn ghost sm" data-act="weekdl">.txt で保存</button></div>
-      <textarea class="wtext" id="weekText" spellcheck="false">${esc(weekText(off))}</textarea></div>` +
+    <div class="kp"><span class="tag">完了 ${W.done.length}件 ${dl(W.done.length, pv.done)}</span><span class="tag">発行 ${W.created.length}件 ${dl(W.created.length, pv.created)}</span><span class="tag">会議・マイルストン ${W.msW.length}件 ${dl(W.msW.length, pv.ms)}</span><span class="tag">持ち越し ${W.carry.length}件</span></div>
+    <div class="wk-panel"><div class="sh" style="margin-bottom:8px">週報テキスト（編集してから保存・コピーできます）<span class="sp"></span>${saved ? '<button class="btn ghost sm" data-act="weekregen" title="保存した内容を捨てて、現在のデータから作り直します">作り直す</button>' : ''}<button class="btn sm" data-act="weeksave">${saved ? '上書き保存' : '保存'}</button><button class="btn ghost sm" data-act="weekcopy">コピー</button><button class="btn ghost sm" data-act="weekdl">.txt</button></div>
+      <textarea class="wtext" id="weekText" spellcheck="false">${esc(saved ? saved.text : weekText(off))}</textarea>
+      <div class="hint2">${saved ? '保存した内容を表示しています。タスクを後から変更しても、保存した週報は変わりません。' : '保存すると、この週の週報を残せます（バックアップにも含まれます）。'}</div></div>` +
     (days.length ? days.map(d => sec(fmtMD(d), byDay[d].map(t => ({html: row(t, [], false, true)})))).join('') : `<div class="empty"><b>この週に完了したタスクはありません</b></div>`) +
-    sec('会議・マイルストン', W.msW.map(m => ({html: msRow(m)})));
+    sec('会議・マイルストン', W.msW.map(m => ({html: msRow(m)}))) +
+    (hist.length ? `<div class="sec"><div class="sh">保存済みの週報<span class="c">${hist.length}</span></div>${hist.map(r => `<div class="ci rep ${r.weekStart === W.mon ? 'cur' : ''}" data-weekgo="${r.weekStart}"><span class="cd" style="width:auto">${fmtMD(r.weekStart)} 〜 ${fmtMD(addDays(r.weekStart, 6))}</span><span class="ct">${esc((r.text.split('\n').find(l => l.startsWith('・完了')) || '').slice(0, 60))}</span><span class="cn">保存 ${mdT(r.saved)}</span><button class="lked" style="opacity:1" data-act="weekdel" data-id="${r.id}" title="削除">✕</button></div>`).join('')}</div>` : '');
 }
 
 /* ===== projects ===== */
@@ -975,6 +1011,81 @@ function openModal(id, preset){
   setTimeout(() => { const i = $('#mTitle'); if (i) { i.focus(); i.setSelectionRange(i.value.length, i.value.length); } }, 30);
 }
 
+/* ===== auto backup (File System Access API) ===== */
+const idb = {
+  open: () => new Promise((ok, ng) => { const r = indexedDB.open('taskflow-fs', 1); r.onupgradeneeded = () => r.result.createObjectStore('kv'); r.onsuccess = () => ok(r.result); r.onerror = () => ng(r.error); }),
+  async get(k){ const db = await this.open(); return new Promise((ok, ng) => { const q = db.transaction('kv').objectStore('kv').get(k); q.onsuccess = () => ok(q.result); q.onerror = () => ng(q.error); }); },
+  async set(k, v){ const db = await this.open(); return new Promise((ok, ng) => { const tx = db.transaction('kv', 'readwrite'); tx.objectStore('kv').put(v, k); tx.oncomplete = () => ok(); tx.onerror = () => ng(tx.error); }); },
+  async del(k){ const db = await this.open(); return new Promise((ok, ng) => { const tx = db.transaction('kv', 'readwrite'); tx.objectStore('kv').delete(k); tx.oncomplete = () => ok(); tx.onerror = () => ng(tx.error); }); },
+};
+const ab = {dir: null, state: 'off', err: '', timer: 0, busy: false};
+const abMeta = () => { try { return JSON.parse(localStorage.getItem('taskflow.ab')) || {}; } catch(e){ return {}; } };
+const abSetMeta = o => { try { localStorage.setItem('taskflow.ab', JSON.stringify({...abMeta(), ...o})); } catch(e){} };
+const abKeep = 30;
+async function abInit(){
+  if (!window.showDirectoryPicker) { ab.state = 'unsupported'; return; }
+  try {
+    const h = await idb.get('dir'); if (!h) return;
+    ab.dir = h; ab.state = (await h.queryPermission({mode:'readwrite'})) === 'granted' ? 'ready' : 'needperm';
+    if (ab.state === 'ready') abRun(false);
+  } catch(e){ ab.state = 'off'; }
+}
+async function abAsk(){
+  try { ab.state = (await ab.dir.requestPermission({mode:'readwrite'})) === 'granted' ? 'ready' : 'needperm'; if (ab.state === 'ready') await abRun(true); }
+  catch(e){ ab.err = e.message || String(e); ab.state = 'error'; }
+  renderSide();
+}
+async function abPick(){
+  try { const h = await window.showDirectoryPicker({id:'taskflow-backup', mode:'readwrite'}); ab.dir = h; await idb.set('dir', h); ab.state = 'ready'; ab.err = ''; await abRun(true); }
+  catch(e){ if (e.name !== 'AbortError') { ab.err = e.message || String(e); ab.state = 'error'; } }
+  renderSide();
+}
+async function abOff(){ try { await idb.del('dir'); } catch(e){} ab.dir = null; ab.state = 'off'; ab.err = ''; abSetMeta({last: 0}); renderSide(); }
+function abSchedule(){ if (ab.state !== 'ready') return; clearTimeout(ab.timer); ab.timer = setTimeout(() => abRun(false), 4000); }
+async function abWrite(name, text){ const fh = await ab.dir.getFileHandle(name, {create: true}); const w = await fh.createWritable(); await w.write(text); await w.close(); }
+async function abPrune(){
+  const lim = addDays(today(), -abKeep);
+  for await (const [name] of ab.dir.entries()) { const m = name.match(/^taskflow-backup-(\d{4}-\d{2}-\d{2})\.json$/); if (m && m[1] < lim) { try { await ab.dir.removeEntry(name); } catch(e){} } }
+}
+async function abRun(manual){
+  if (!ab.dir || ab.busy) return; ab.busy = true;
+  try {
+    const json = backupJSON(), T = today();
+    await abWrite('taskflow-backup-latest.json', json);
+    await abWrite(`taskflow-backup-${T}.json`, json);
+    if (abMeta().pruned !== T) { await abPrune(); abSetMeta({pruned: T}); }
+    abSetMeta({last: Date.now()}); ab.err = ''; ab.state = 'ready';
+    if (manual) toast('バックアップを保存しました');
+  } catch(e){
+    ab.err = e.message || String(e); ab.state = (e.name === 'NotAllowedError' || e.name === 'SecurityError') ? 'needperm' : 'error';
+    if (manual) toast('バックアップに失敗しました：' + ab.err);
+  }
+  ab.busy = false; renderSide();
+}
+function openBackupModal(){
+  const L = $('#layer'), fmt = ms => { const d = new Date(ms); return `${d.getMonth()+1}/${d.getDate()} ${pad(d.getHours())}:${pad(d.getMinutes())}`; };
+  const draw = () => {
+    const last = abMeta().last, st = ab.state;
+    let body = '';
+    if (st === 'unsupported') body = '<div class="abmsg warn2">このブラウザは自動バックアップに対応していません。Google Chrome または Edge で開いてください。</div>';
+    else if (st === 'off') body = '<div class="abmsg">指定したフォルダに、データの変更のたびに自動でバックアップを保存します。<br><b>PCが壊れても残る場所</b>（OneDrive、共有フォルダなど）がおすすめです。</div><div class="mf" style="justify-content:flex-start"><button class="btn" id="abPick">保存先フォルダを選ぶ</button></div>';
+    else if (st === 'needperm') body = `<div class="abmsg warn2">保存先「${esc(ab.dir ? ab.dir.name : '')}」へのアクセス許可が必要です（ブラウザを開き直すと、再確認されます）。</div><div class="mf" style="justify-content:flex-start"><button class="btn" id="abAsk">許可して再開</button><button class="btn ghost" id="abPick">フォルダを変える</button></div>`;
+    else if (st === 'error') body = `<div class="abmsg warn2">バックアップに失敗しました：${esc(ab.err)}</div><div class="mf" style="justify-content:flex-start"><button class="btn" id="abNow">再試行</button><button class="btn ghost" id="abPick">フォルダを変える</button></div>`;
+    else body = `<div class="abmsg ok2">✓ 有効　保存先：<b>${esc(ab.dir.name)}</b><br>最終バックアップ：${last ? fmt(last) : 'まだありません'}</div>
+      <div class="hint2" style="margin:0 0 12px">フォルダ内には <b>taskflow-backup-latest.json</b>（最新）と、日付つきのファイル（直近${abKeep}日分）が保存されます。復元するときは、左下の ⬆ でこのファイルを読み込みます。</div>
+      <div class="mf" style="justify-content:flex-start"><button class="btn" id="abNow">今すぐバックアップ</button><button class="btn ghost" id="abPick">フォルダを変える</button><button class="btn danger sm" id="abOff">解除</button></div>`;
+    L.innerHTML = `<div class="scrim" id="scrim"><div class="modal" style="width:min(500px,94vw)"><div class="f"><label style="font-size:15px;color:var(--text)">💾 自動バックアップ</label></div>${body}<div class="mf"><span class="sp"></span><button class="btn ghost" id="abClose">閉じる</button></div></div></div>`;
+  };
+  draw();
+  const again = async fn => { await fn(); draw(); };
+  L.onclick = e => {
+    if (e.target.id === 'scrim' || e.target.id === 'abClose') { L.innerHTML = ''; return; }
+    if (e.target.id === 'abPick') again(abPick); else if (e.target.id === 'abAsk') again(abAsk);
+    else if (e.target.id === 'abNow') again(() => abRun(true)); else if (e.target.id === 'abOff') again(abOff);
+  };
+  L.onkeydown = e => { if (e.key === 'Escape') { e.stopPropagation(); L.innerHTML = ''; } };
+}
+
 /* ===== events ===== */
 document.addEventListener('click', e => {
   const t = e.target;
@@ -985,6 +1096,7 @@ document.addEventListener('click', e => {
   const pje = t.closest('[data-pjedit]'); if (pje) return openProjectModal(pje.dataset.pjedit);
   const msa = t.closest('[data-msadd]'); if (msa) { const [ty, pr] = msa.dataset.msadd.split(':'); return openMsModal(null, {type: ty, project: pr}); }
   const pjt = t.closest('[data-pjtask]'); if (pjt) return openModal(null, {project: pjt.dataset.pjtask});
+  const wgo = t.closest('[data-weekgo]'); if (wgo && !t.closest('[data-act]')) { S.weekOff = weekOffOf(wgo.dataset.weekgo); save(); render(); window.scrollTo(0, 0); $('#content').scrollTop = 0; return; }
   const wkb = t.closest('[data-week]'); if (wkb) { const v = +wkb.dataset.week; S.weekOff = v === 0 ? 0 : (S.weekOff || 0) + v; save(); return render(); }
   const mtg = t.closest('[data-mtag]'); if (mtg && !t.closest('[data-act]')) { e.stopPropagation(); S.memoTag = S.memoTag === mtg.dataset.mtag ? '' : mtg.dataset.mtag; save(); return render(); }
   const le = t.closest('[data-lkedit]'); if (le) { e.stopPropagation(); return openLinkModal(le.dataset.lkedit); }
@@ -1006,6 +1118,9 @@ document.addEventListener('click', e => {
     else if (k === 'memopin') { const x = S.memos.find(y => y.id === id); if (x) { x.pinned = !x.pinned; save(); render(); } }
     else if (k === 'memotask') { const x = S.memos.find(y => y.id === id); if (x) { memoToTask(x); } }
     else if (k === 'memodel') { const i = S.memos.findIndex(y => y.id === id); if (i >= 0) { const [d] = S.memos.splice(i,1); save(); render(); toast('削除しました', '元に戻す', () => { S.memos.splice(i,0,d); save(); render(); }); } }
+    else if (k === 'weeksave') { const el = $('#weekText'); if (el) { const mon = weekData(S.weekOff || 0).mon; const cur = S.reports.find(r => r.weekStart === mon); if (cur) { cur.text = el.value; cur.saved = Date.now(); } else S.reports.push({id: uid(), weekStart: mon, text: el.value, saved: Date.now()}); save(); render(); toast('週報を保存しました'); } }
+    else if (k === 'weekregen') { const mon = weekData(S.weekOff || 0).mon; if (confirm('保存した週報を破棄して、現在のデータから作り直します。よろしいですか？')) { S.reports = S.reports.filter(r => r.weekStart !== mon); save(); render(); } }
+    else if (k === 'weekdel') { const i = S.reports.findIndex(r => r.id === id); if (i >= 0 && confirm('この保存済み週報を削除します。よろしいですか？')) { S.reports.splice(i, 1); save(); render(); } }
     else if (k === 'weekcopy') { const el = $('#weekText'); if (el) copyText(el.value).then(() => toast('週報をコピーしました'), () => toast('コピーできませんでした')); }
     else if (k === 'weekdl') { const el = $('#weekText'); if (el) { const r = weekData(S.weekOff || 0), a = document.createElement('a'); a.href = URL.createObjectURL(new Blob(['\ufeff' + el.value], {type:'text/plain;charset=utf-8'})); a.download = `週報_${r.mon}.txt`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); } }
     else if (k === 'togDone') { S.showDone = !S.showDone; save(); render(); }
@@ -1018,10 +1133,11 @@ document.addEventListener('click', e => {
   const mmo = t.closest('[data-memoopen]'); if (mmo) return openMemoModal(mmo.dataset.memoopen);
   const o = t.closest('[data-open]'); if (o) return openModal(o.dataset.open);
   const day = t.closest('[data-day]'); if (day) return openModal(null, {due: day.dataset.day});
+  if (t.closest('#bBackup')) return openBackupModal();
   if (t.closest('#bTheme')) { S.theme = S.theme === 'dark' ? 'light' : 'dark'; save(); return render(); }
   if (t.closest('#bExp')) return exportData();
   if (t.closest('#bImp')) return fileIn.click();
-  if (t.closest('#bReset')) { if (confirm('すべてのタスク・プロジェクト・メモ・リンク・記録を削除して初期状態に戻します。元に戻せません。（必要なら先に ⬇ でバックアップしてください）本当に削除しますか？')) { S.tasks = []; S.links = []; S.projects = []; S.ms = []; S.memos = []; S.hist = {}; S.nav = 'today'; S.proj = ''; save(); try { localStorage.removeItem('taskflow.v1'); } catch(e){} render(); toast('初期化しました'); } return; }
+  if (t.closest('#bReset')) { if (confirm('すべてのタスク・プロジェクト・メモ・リンク・記録を削除して初期状態に戻します。元に戻せません。（必要なら先に ⬇ でバックアップしてください）本当に削除しますか？')) { S.tasks = []; S.links = []; S.projects = []; S.ms = []; S.memos = []; S.reports = []; S.hist = {}; S.nav = 'today'; S.proj = ''; save(); try { localStorage.removeItem('taskflow.v1'); } catch(e){} render(); toast('初期化しました'); } return; }
 });
 let dragId = null;
 document.addEventListener('change', e => { const x = e.target.dataset.fs; if (x) { S.f[x] = e.target.value; save(); render(); } });
@@ -1059,16 +1175,18 @@ document.addEventListener('keydown', e => {
   else if ('123456789'.includes(e.key) && e.key) { S.nav = ['today','soon','all','cal','inbox','week','projects','memo','links'][+e.key-1]; q = ''; $('#q').value = ''; render(); }
 });
 
+const backupJSON = () => JSON.stringify({app:'taskflow', version:3, saved:new Date().toISOString(), data:S}, null, 2);
 function exportData(){
   const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([JSON.stringify({app:'taskflow', version:3, data:S}, null, 2)], {type:'application/json'}));
+  a.href = URL.createObjectURL(new Blob([backupJSON()], {type:'application/json'}));
   a.download = `taskflow-backup-${today()}.json`; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 1000); toast('バックアップを書き出しました');
 }
 const fileIn = Object.assign(document.createElement('input'), {type:'file', accept:'.json', hidden:true}); document.body.appendChild(fileIn);
-fileIn.onchange = () => { const f = fileIn.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { try { const d = JSON.parse(r.result).data; if (!Array.isArray(d.tasks)) throw 0; if (!confirm(`${d.tasks.length}件のタスクを読み込みます。現在のデータは置き換わります。`)) return; S.links = []; S.projects = []; S.ms = []; S.memos = []; S.hist = {}; S = Object.assign(S, d); S.f = Object.assign({st:'open', imp:0, pri:0, proj:'', due:'all', tag:'', sort:'due', dir:1}, S.f); normalize(); S.proj = ''; save(); render(); toast('読み込みました'); } catch(e){ toast('読み込めないファイルです'); } fileIn.value = ''; }; r.readAsText(f); };
+fileIn.onchange = () => { const f = fileIn.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => { try { const d = JSON.parse(r.result).data; if (!Array.isArray(d.tasks)) throw 0; if (!confirm(`${d.tasks.length}件のタスクを読み込みます。現在のデータは置き換わります。`)) return; S.links = []; S.projects = []; S.ms = []; S.memos = []; S.reports = []; S.hist = {}; S = Object.assign(S, d); S.f = Object.assign({st:'open', imp:0, pri:0, proj:'', due:'all', tag:'', sort:'due', dir:1}, S.f); normalize(); S.proj = ''; save(); render(); toast('読み込みました'); } catch(e){ toast('読み込めないファイルです'); } fileIn.value = ''; }; r.readAsText(f); };
 document.addEventListener('visibilitychange', () => { if (!document.hidden) render(); });
 
 load(); renderParse(); render();
+abInit().then(() => { renderSide(); if (ab.state === 'needperm') toast('💾 自動バックアップを再開するには、左下の 💾 から許可してください'); else if (ab.state === 'off' && !abMeta().hinted) { abSetMeta({hinted: true}); toast('💾 左下の 💾 から、自動バックアップを設定できます'); } });
 </script>
 </body>
 </html>
